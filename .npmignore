@@ -1,0 +1,11 @@
+test
+.github
+.babelrc
+.editorconfig
+.env.jest
+.eslintignore
+.eslintrc.js
+.gitignore
+jest.config.js
+jsconfig.json
+jsdoc.json

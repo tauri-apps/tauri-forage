@@ -1,0 +1,67 @@
+{
+  "name": "@tauri-apps/curriedforage",
+  "version": "1.0.0-alpha.0",
+  "description": "enhanced localForage with curry and crypto - for any browser and device",
+  "main": "index.js",
+  "directories": {
+    "src": "src",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "jest",
+    "test:jest": "jest --updateSnapshot",
+    "test:unit:coverage": "jest --coverage",
+    "test:unit:watch": "jest --watch",
+    "test:unit:watchAll": "jest --watchAll",
+    "transpile": "npx babel ./lib --out-dir ./dist && npx eslint ./dist/*.js ./dist/*.js --fix",
+    "makeDocs": "jsdoc -c './jsdoc.json' -d docs && git add './docs/*'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nothingismagick/curriedForage.git"
+  },
+  "author": "Daniel Thompson-Yvetot",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nothingismagick/curriedForage/issues"
+  },
+  "homepage": "https://github.com/nothingismagick/curriedForage#readme",
+  "dependencies": {
+    "localforage": "^1.7.3",
+    "ramda": "^0.26.1",
+    "tweetnacl": "^1.0.1",
+    "tweetnacl-util": "^0.15.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.6.4",
+    "@babel/core": "^7.6.4",
+    "@babel/preset-env": "^7.6.3",
+    "babel-eslint": "^10.0.3",
+    "babel-jest": "^24.9.0",
+    "babel-plugin-transform-relative-paths": "^0.1.0",
+    "better-docs": "^1.4.7",
+    "dom-storage": "^2.1.0",
+    "dotenv": "8.2.0",
+    "eslint": "^6.8.0",
+    "eslint-plugin-security": "^1.4.0",
+    "husky": "^1.2.0",
+    "jest": "^24.9.0",
+    "jest-transform-stub": "^2.0.0",
+    "jsdoc": "^3.6.3",
+    "jsdoc-mermaid": "^1.0.0",
+    "lint-staged": "^9.4.2",
+    "postinstall-postinstall": "^2.0.0",
+    "promise": "^8.0.2"
+  },
+  "engines": {
+    "node": ">= 10.18.1",
+    "npm": ">= 6.13.4",
+    "yarn": ">= 1.21.1"
+  },
+  "lint-staged": {
+    "src/*.{js,vue}": [
+      "eslint --fix",
+      "git add"
+    ]
+  }
+}
