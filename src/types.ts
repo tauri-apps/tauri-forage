@@ -16,14 +16,14 @@ export interface Decryptable {
 
 export interface EncryptableBox {
   json: object
-  key: string
-  secretOrSharedKey: string
+  key: Uint8Array
+  secretOrSharedKey: Uint8Array
 }
 
 export interface DecryptableBox {
-  secretOrSharedKey: string
+  secretOrSharedKey: Uint8Array
   messageWithNonce: string
-  key: string
+  key: Uint8Array
 }
 
 export interface Purifiable {

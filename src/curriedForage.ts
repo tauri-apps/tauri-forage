@@ -1,4 +1,4 @@
-import localForage, { LocalForageOptions } from 'localforage'
+import localForage from 'localforage'
 import {
   mergeDeepRight,
   mergeDeepWith,
@@ -24,7 +24,7 @@ export interface BeforeItem extends Item{
 }
 
 export interface IndexItem extends BeforeItem {
-  index?: string
+  index?: number
 }
 
 export interface KeyValueItem extends BeforeItem {
@@ -402,7 +402,7 @@ const forage = {
    *
    * @param {object} options
    */
-  config (options: LocalForageOptions) {
+  config (options: any) {
     return localForage.config(options)
   },
   /**
@@ -436,10 +436,12 @@ const forage = {
     // this should also register itself in a list of stores
     return localForage.createInstance({
       name: name || 'curriedForage'
-    }, (success: any, err: any) => {
-      /* istanbul ignore next */
-      return err ? handler.logger(err, logger) : success
-    })
+    }
+    // , (success: any, err: any) => {
+    //   /* istanbul ignore next */
+    //   return err ? handler.logger(err, logger) : success
+    // }
+    )
   },
 
   // todo: when purging data, this will be important.
