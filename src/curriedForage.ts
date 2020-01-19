@@ -1,4 +1,4 @@
-import localForage from 'localforage'
+import localForage, { LocalForageOptions } from 'localforage'
 import {
   mergeDeepRight,
   mergeDeepWith,
@@ -12,19 +12,22 @@ import { MaybeFunction } from './types'
 
 export type Store = {}
 
-export interface Item { 
+export interface Item {
   key?: string
   logger?: LoggerType
   returner?: ReturnerType
-  before?: boolean
-  store?: Store
+  store?: string
 }
 
-export interface IndexItem extends Item {
+export interface BeforeItem extends Item{ 
+  before?: boolean
+}
+
+export interface IndexItem extends BeforeItem {
   index?: string
 }
 
-export interface KeyValueItem extends Item {
+export interface KeyValueItem extends BeforeItem {
   value?: string
 }
 
@@ -80,7 +83,7 @@ const forage = {
    * @function getItem
    * @memberof forage
    */
-  getItem ({ key, logger, returner, before, store }: Item = {}) {
+  getItem ({ key, logger, returner, before, store }: BeforeItem = {}) {
     return async function (curry: MaybeFunction) {
       const storage = await _defineStore({ store: store })
       key = before ? await handler.maybeCurry(curry || null)(key) : key
@@ -111,7 +114,7 @@ const forage = {
       const storage = await _defineStore({ store: store })
       value = before ? await handler.maybeCurry(curry || null)(value) : value
       return handler.returner(
-        storage.getItem(key).then(v => {
+        storage.getItem(key).then((v: any) => {
           // console.log(v)
           return !before ? handler.maybeCurry(curry || null)(v[value]) : v[value]
         }).catch((err: any) => {
@@ -140,7 +143,7 @@ const forage = {
       const storage = _defineStore({ store: store })
       value = before ? await handler.maybeCurry(curry || null)(value) : value
       return handler.returner(
-        storage.setItem(key, value).then(async (v) => {
+        storage.setItem(key, value).then(async (v: any) => {
           return !before ? handler.maybeCurry(curry || null)(v) : v
         }).catch((err: any) => {
           /* istanbul ignore next */
@@ -165,7 +168,7 @@ const forage = {
       const storage = await _defineStore({ store: store })
       index = before ? await handler.maybeCurry(curry || null)(index) : index
       return handler.returner(
-        storage.key(index).then((v) => {
+        storage.key(index).then((v: any) => {
           return !before ? handler.maybeCurry(curry || null)(v) : v
         }).catch((err: any) => {
           /* istanbul ignore next */
@@ -195,17 +198,17 @@ const forage = {
    * @memberof forage
    */
   mergeItem ({ key, value, type, returner, logger, before, store }: MergeItem = {}) {
-    const concatValues = (k, l, r) => k === 'values' ? concat(l, r) : r
+    const concatValues = (k: string, l: string | any[], r: string | any[]) => k === 'values' ? concat(l, r) : r
     return async function (curry: MaybeFunction) {
       const storage = _defineStore({ store: store })
       value = before ? await handler.maybeCurry(curry || null)(value) : value
       return handler.returner(
-        await storage.getItem(key).then(async (v) => {
+        await storage.getItem(key).then(async (v: any) => {
           let val
           switch (type) {
             case 'custom':
               try {
-                val = await storage.setItem(key, await handler.maybeCurry(curry)(v, value))
+                val = await storage.setItem(key, await handler.maybeCurry(curry)(v))
                 return val
               } catch (err) {
                 /* istanbul ignore next */
@@ -266,7 +269,7 @@ const forage = {
     }
   },
 
-  removeItem ({ key, logger, returner, before, store }: Item = {}) {
+  removeItem ({ key, logger, returner, before, store }: BeforeItem = {}) {
     return async function (curry: MaybeFunction) {
       key = before ? await handler.maybeCurry(curry || null)(key) : key
       const storage = await _defineStore({ store: store })
@@ -281,26 +284,26 @@ const forage = {
     }
   },
 
-  deleteItemKey: async function (key: string, value: string, ...restArgs: any[]) {
+  deleteItemKey: async function (key: string, value: string | string[], ...restArgs: any[]) {
     const args = _mapArgs(restArgs)
-    return localForage.getItem(key).then((val) => {
+    return localForage.getItem(key).then((val: any) => {
       if (typeof value === 'string') {
         delete val[value]
       } else if (typeof value === typeof []) {
-        value.forEach(v => delete val[v])
+        value.forEach((v) => delete val[v])
       }
-      return localForage.setItem(key, val).then((val) => {
+      return localForage.setItem(key, val).then((val: any) => {
         return val
       }).catch((err: any) => {
         /* istanbul ignore next */
-        return handler.logger(err, args.logger)
+        return handler.logger(err, args[0].logger)
       })
     }).catch((err: any) => {
       /* istanbul ignore next */
-      return handler.logger(err, args.logger)
+      return handler.logger(err, args[0].logger)
     })
   },
-  clear ({ logger = LoggerType.none, store }: { logger?: MaybeLoggerType, store?: Store } = {}) {
+  clear ({ logger = LoggerType.none, store }: { logger?: MaybeLoggerType, store?: string } = {}) {
     return async function (curry: MaybeFunction) {
       const storage = await _defineStore({ store: store })
       return storage.clear().then(() => {
@@ -311,7 +314,7 @@ const forage = {
       })
     }
   },
-  length ({ logger, returner, store } = {}) {
+  length ({ logger, returner, store }: { logger?: LoggerType, returner?: ReturnerType, store?: string} = {}) {
     return async function (curry: MaybeFunction) {
       const storage = await _defineStore({ store: store })
       return handler.returner(
@@ -342,7 +345,7 @@ const forage = {
     return async function (curry: MaybeFunction) {
       const storage = await _defineStore({ store: store })
       return handler.returner(
-        await storage.keys().then(v => {
+        await storage.keys().then((v: any) => {
           return handler.maybeCurry(curry || null)(v)
         }).catch((err: any) => {
           /* istanbul ignore next */
@@ -352,11 +355,11 @@ const forage = {
     }
   },
 
-  hasKey ({ key, logger, returner, store } = {}) { // must be a key
+  hasKey ({ key, logger, returner, store }: Item = {}) { // must be a key
     return async function (curry: MaybeFunction) {
       const storage = await _defineStore({ store: store })
       return handler.returner(
-        await storage.keys().then(k => {
+        await storage.keys().then((k: string[]) => {
           return handler.maybeCurry(curry || null)(k.includes(key))
         }).catch((err: any) => {
           /* istanbul ignore next */
@@ -378,10 +381,10 @@ const forage = {
     })
   },
   */
-  hasKeyValue ({ key, value, logger, returner } = {}) { // boolean version of getKeyValue
+  hasKeyValue ({ key, value, logger, returner }: { key?: string, value?: string, logger?: LoggerType, returner?: ReturnerType} = {}) { // boolean version of getKeyValue
     return async function (curry: MaybeFunction) {
       return handler.returner(
-        await localForage.getItem(key).then((val) => {
+        await localForage.getItem(key).then((val: any) => {
           return handler.maybeCurry(curry)(!!val[value])
         }).catch((err: any) => {
           /* istanbul ignore next */
@@ -399,7 +402,7 @@ const forage = {
    *
    * @param {object} options
    */
-  config (options) {
+  config (options: LocalForageOptions) {
     return localForage.config(options)
   },
   /**
@@ -433,7 +436,7 @@ const forage = {
     // this should also register itself in a list of stores
     return localForage.createInstance({
       name: name || 'curriedForage'
-    }, (success, err: any) => {
+    }, (success: any, err: any) => {
       /* istanbul ignore next */
       return err ? handler.logger(err, logger) : success
     })
@@ -503,7 +506,7 @@ const _mapArgs = function (arr: any[]) {
   } else return []
 }
 
-const _defineStore = function ({ store }: { store?: Store } = {}) {
+const _defineStore = function ({ store }: { store?: string } = {}) {
   if (!store) return localForage
   return forage.createInstance({
     name: store
