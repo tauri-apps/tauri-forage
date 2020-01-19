@@ -1,3 +1,28 @@
+import { MaybeFunction, Empty, Purifiable } from './types'
+
+export enum ReturnerType {
+  quiet = 1,
+  console = 2,
+  break = 3,
+  truthy = 4,
+  typeof = 5,
+  trace = 6,
+  passthrough = 7,
+  default = 7
+}
+
+export type MaybeReturnerType = ReturnerType | Empty 
+
+export enum LoggerType {
+  none,
+  string,
+  trace,
+  console,
+  throw
+} 
+
+export type MaybeLoggerType = LoggerType | Empty
+
 /* eslint no-fallthrough: 0 */
 
 /**
@@ -24,13 +49,13 @@ export const handler = {
    * @category handler
    * @memberof handler
    * @param {*} val
-   * @param {number|string} type
+   * @param {MaybeReturnerType} type
    * @throws {Error} the message it is passed (if type 3)
    * @returns {*}
    * @function
    */
-  returner (val, type) {
-    return function (returnerType) {
+  returner (val: any, type: MaybeReturnerType) {
+    return function (returnerType: ReturnerType) {
       if (!type) {
         type = returnerType
       }
@@ -38,14 +63,14 @@ export const handler = {
       if (t === 'number' || t === 'string') {
         switch (type) {
           case 1:
-          case 'quiet': // be totally quiet
+          case ReturnerType.quiet: // be totally quiet
             return void 0
           case 2:
-          case 'console': // helpful for debugging
+          case ReturnerType.console: // helpful for debugging
             console.log(val)
             break
           case 3:
-          case 'break': // manual breakpoint
+          case ReturnerType.break: // manual breakpoint
             if (val instanceof Error) {
               // if it already is an error no need to throw twice
               // but if the message is empty, fill it.
@@ -55,26 +80,26 @@ export const handler = {
               throw new Error(val || 'No result')
             }
           case 4:
-          case 'truthy': // 'truthy': undefined not null
+          case ReturnerType.truthy: // 'truthy': undefined not null
             return val === null || val === void 0 ? false : val !== false
           case 5:
-          case 'typeof': // return 'typeof'
+          case ReturnerType.typeof: // return 'typeof'
             if (val === null) return 'null'
             if (val === void 0) return 'undefined'
             if (val instanceof Error) return 'error'
             try {
-              val.map(v => v)
+              val.map((v: any) => v)
               return 'array'
             } catch (e) {
               return typeof val
             }
           case 6:
-          case 'trace':
+          case ReturnerType.trace:
             console.trace(`TRACE: ${val}`)
             break
           case 7:
-          case 'passthrough': // short-circuit
-          case 'default':
+          case ReturnerType.passthrough: // short-circuit
+          case ReturnerType.default:
           default:
             return val
         }
@@ -95,11 +120,11 @@ export const handler = {
    * @category handler
    * @memberof handler
    * @param {*} msg
-   * @param {string} type
+   * @param {MaybeLoggerType} type
    * @throws {Error} - just the message it is passed
    * @returns {*}
    */
-  logger (msg, type) {
+  logger (msg: any, type: MaybeLoggerType) {
     // todo: discuss making things silent in production
     /*
     // set with a variable
@@ -111,23 +136,23 @@ export const handler = {
     // delegate from .env (still global, most flexible)
     ? process.env.LOGGING ? type = process.env.LOGGING : void 0
     */
-    return function (loggerType) {
+    return function (loggerType: LoggerType) {
       if (!type) {
         type = loggerType
       }
       if (typeof type === 'string' && msg) {
         switch (type) {
-          case 'none':
+          case LoggerType.none:
             return
-          case 'string':
+          case LoggerType.string:
             return msg
-          case 'trace':
+          case LoggerType.trace:
             console.trace(`TRACE: ${msg}`)
             return
-          case 'console':
+          case LoggerType.console:
             console.error(msg)
             return
-          case 'throw':
+          case LoggerType.throw:
             if (msg instanceof Error) {
               // if it already is an error no need to throw twice,
               // but if the message is empty, fill it.
@@ -155,8 +180,8 @@ export const handler = {
    * @returns {*}
    * @function
    */
-  maybeCurry (fn) {
-    return (val) => {
+  maybeCurry (fn: MaybeFunction) {
+    return (val: any) => {
       /* also works - just seems dirty (and dangerous)
       try {
         return fn(val)
@@ -181,12 +206,13 @@ export const handler = {
    * @param {number} maxLen - max length of model
    * @function
    */
-  jsonPurify ({ model, maxLen } = {}) {
-    let parsedObj, safeObj = {}
+  jsonPurify ({ model, maxLen }: Purifiable = {}) {
+    let parsedObj: any
+    let safeObj: { [key: string]: any } = {}
     /**
      * @param {string}
      */
-    return async function (str) {
+    return async function (str: string) {
       try {
         if (maxLen && str.length > maxLen) {
           return null

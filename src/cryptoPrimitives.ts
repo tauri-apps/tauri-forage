@@ -7,6 +7,7 @@ import {
   encodeBase64,
   decodeBase64
 } from 'tweetnacl-util'
+import { MaybeUint8Array, Encryptable, Decryptable, EncryptableBox, DecryptableBox } from './types'
 
 // just a helper for a constant :)
 const keyLength = secretbox.keyLength
@@ -24,7 +25,7 @@ const crypto = {
    * @returns {object}
    * @function
    */
-  nonce () {
+  nonce (): Uint8Array {
     return randomBytes(secretbox.nonceLength)
   },
   /**
@@ -35,7 +36,7 @@ const crypto = {
    * @returns {string}
    * @function
    */
-  hash (input) {
+  hash (input: string): string {
     return encodeBase64(hash(decodeUTF8(input))).slice(0, 44)
   },
   /**
@@ -61,7 +62,7 @@ const crypto = {
      * @param {*} input
      * @function
      */
-    keyGen (input) {
+    keyGen (input: MaybeUint8Array): string {
       input = input || randomBytes(secretbox.keyLength)
       return encodeBase64(input)
     },
@@ -75,7 +76,7 @@ const crypto = {
      * @returns {string}
      * @function
      */
-    encrypt: async function ({ json, key } = {}) {
+    encrypt: async function ({ json, key }: Encryptable = {}) {
       if (!key) {
         throw new Error('[CryptoPrimitive] - missing key')
       }
@@ -125,7 +126,7 @@ const crypto = {
      * @returns {object}
      * @function
      */
-    decrypt: async function ({ msg, key } = {}) {
+    decrypt: async function ({ msg, key }: Decryptable = {}) {
       const keyUint8Array = decodeBase64(key)
       const messageWithNonceAsUint8Array = decodeBase64(msg)
       const nonce = messageWithNonceAsUint8Array.slice(0, secretbox.nonceLength)
@@ -189,7 +190,7 @@ const crypto = {
       secretOrSharedKey,
       json,
       key
-    }) {
+    }: EncryptableBox) {
       const nonce = this.crypto.nacl.nonce()
       const messageUint8 = decodeUTF8(JSON.stringify(json))
       const encrypted = key
@@ -218,7 +219,7 @@ const crypto = {
       secretOrSharedKey,
       messageWithNonce,
       key
-    }) {
+    }: DecryptableBox) {
       const messageWithNonceAsUint8Array = decodeBase64(messageWithNonce)
       const nonce = messageWithNonceAsUint8Array.slice(0, box.nonceLength)
       const message = messageWithNonceAsUint8Array.slice(

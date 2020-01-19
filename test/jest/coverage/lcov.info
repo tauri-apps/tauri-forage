@@ -1,5 +1,5 @@
 TN:
-SF:/Users/denjell/git/curriedForage/src/cryptoForage.js
+SF:/home/laegel/Workspace/perso/curriedForage/src/cryptoForage.js
 FN:31,(anonymous_0)
 FN:32,(anonymous_1)
 FN:37,(anonymous_2)
@@ -36,7 +36,7 @@ BRF:8
 BRH:7
 end_of_record
 TN:
-SF:/Users/denjell/git/curriedForage/src/cryptoPrimitives.js
+SF:/home/laegel/Workspace/perso/curriedForage/src/cryptoPrimitives.js
 FN:27,(anonymous_0)
 FN:38,(anonymous_1)
 FN:64,(anonymous_2)
@@ -120,7 +120,7 @@ BRF:14
 BRH:4
 end_of_record
 TN:
-SF:/Users/denjell/git/curriedForage/src/curriedForage.js
+SF:/home/laegel/Workspace/perso/curriedForage/src/curriedForage.js
 FN:60,(anonymous_0)
 FN:61,(anonymous_1)
 FN:65,(anonymous_2)
@@ -473,7 +473,7 @@ BRF:87
 BRH:58
 end_of_record
 TN:
-SF:/Users/denjell/git/curriedForage/src/handler.js
+SF:/home/laegel/Workspace/perso/curriedForage/src/handler.js
 FN:32,(anonymous_0)
 FN:33,(anonymous_1)
 FN:66,(anonymous_2)
@@ -631,7 +631,7 @@ BRF:69
 BRH:63
 end_of_record
 TN:
-SF:/Users/denjell/git/curriedForage/src/index.js
+SF:/home/laegel/Workspace/perso/curriedForage/src/index.js
 FNF:0
 FNH:0
 LF:0

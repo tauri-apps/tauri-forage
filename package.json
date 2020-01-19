@@ -14,7 +14,8 @@
     "test:unit:watch": "jest --watch",
     "test:unit:watchAll": "jest --watchAll",
     "transpile": "npx babel ./lib --out-dir ./dist && npx eslint ./dist/*.js ./dist/*.js --fix",
-    "makeDocs": "jsdoc -c './jsdoc.json' -d docs && git add './docs/*'"
+    "makeDocs": "jsdoc -c './jsdoc.json' -d docs && git add './docs/*'",
+    "build": "webpack --progress"
   },
   "repository": {
     "type": "git",
@@ -51,7 +52,11 @@
     "jsdoc-mermaid": "^1.0.0",
     "lint-staged": "^9.4.2",
     "postinstall-postinstall": "^2.0.0",
-    "promise": "^8.0.2"
+    "promise": "^8.0.2",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.7.5",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10"
   },
   "engines": {
     "node": ">= 10.18.1",

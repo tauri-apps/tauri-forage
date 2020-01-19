@@ -1,6 +1,15 @@
 import { crypto } from './cryptoPrimitives'
 import { forage } from './curriedForage'
-import { handler } from './handler'
+import { handler, LoggerType, ReturnerType } from './handler'
+import { Purifiable } from './types'
+
+export interface Enbox { 
+  key?: string
+  loggerType?: LoggerType
+  returnType?: ReturnerType 
+}
+
+export interface Debox extends Enbox, Purifiable {}
 
 // import { validateJson } from '../utils/validate'
 /**
@@ -28,8 +37,8 @@ const cryptoForage = {
    *  })(new Date().now())
    */
 
-  enBox: function ({ key, loggerType, returnType } = {}) {
-    return async function (val) {
+  enBox: function ({ key, loggerType, returnType }: Enbox = {}) {
+    return async function (val: Promise<any>) {
       return handler.returner(
         await crypto.secretBox.encrypt({
           json: await val,
@@ -67,8 +76,8 @@ const cryptoForage = {
    *    return box
    *  }
    */
-  deBox: function ({ key, model, maxLen, loggerType, returnType } = {}) {
-    return async function (val) {
+  deBox: function ({ key, model, maxLen, loggerType, returnType }: Debox = {}) {
+    return async function (val: Promise<any>) {
       const result = handler.returner(
         await crypto.secretBox.decrypt({
           msg: await val,
