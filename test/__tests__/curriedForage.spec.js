@@ -6,7 +6,8 @@
  * This is just about validating the units.
  */
 
-import { forage, internals, handler } from '../../dist'
+import { forage, handler } from '../../dist'
+import { internals } from '../../dist/curriedForage'
 import localForage from 'localforage'
 
 /*********************************************************************************
