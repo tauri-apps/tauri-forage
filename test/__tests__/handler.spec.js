@@ -1,6 +1,6 @@
 /* eslint no-undef: 0 */
 
-import { handler } from 'src/handler'
+import { handler } from '../../dist'
 
 /*********************************************************************************
  *

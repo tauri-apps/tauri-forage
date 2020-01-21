@@ -1,8 +1,6 @@
 /* eslint no-undef: 0 */
 
-import { cryptoForage } from 'src/cryptoForage'
-import { forage } from 'src/curriedForage'
-import { crypto } from 'src/cryptoPrimitives'
+import { cryptoForage, forage, crypto } from '../../dist'
 // import { handler } from 'src/utils/handler'
 
 /**

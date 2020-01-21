@@ -3,7 +3,7 @@ import {
   cryptoForage,
   handler,
   crypto
-} from 'src/index'
+} from '../../dist'
 
 // these are just tests to make sure we are exporting properly
 

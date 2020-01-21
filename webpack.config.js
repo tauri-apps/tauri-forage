@@ -1,14 +1,15 @@
 const path = require('path')
 
 module.exports = {
-  entry: {
-    'cryptoForage': './src/cryptoForage.ts',
-    'cryptoPrimitives': './src/cryptoPrimitives.ts',
-    'curriedForage': './src/curriedForage.ts',
-    'handler': './src/handler.ts',
-    'index': './src/index.ts',
-  },
-  devtool: 'inline-source-map',
+  entry: './src/index.ts',
+  // entry: {
+  //   'cryptoForage': './src/cryptoForage.ts',
+  //   'cryptoPrimitives': './src/cryptoPrimitives.ts',
+  //   'curriedForage': './src/curriedForage.ts',
+  //   'handler': './src/handler.ts',
+  //   'index': './src/index.ts',
+  // },
+  devtool: 'source-map',
   module: {
     rules: [
       {
@@ -22,7 +23,10 @@ module.exports = {
     extensions: [ '.tsx', '.ts', '.js' ],
   },
   output: {
-    filename: '[name].js',
+    filename: 'index.js',
     path: path.resolve(__dirname, 'dist'),
+    library: 'curriedForage',
+    libraryTarget: 'umd'
   },
+  target: 'node'
 }
