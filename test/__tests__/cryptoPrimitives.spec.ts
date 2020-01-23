@@ -1,6 +1,6 @@
 /* eslint no-undef: 0 */
 
-import { crypto } from '../../dist'
+import { crypto } from '../../src'
 
 // todo  =  mock nonce (aka crypto and remove test function)
 

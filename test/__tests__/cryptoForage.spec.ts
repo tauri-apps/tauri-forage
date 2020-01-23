@@ -1,6 +1,6 @@
 /* eslint no-undef: 0 */
 
-import { cryptoForage, forage, crypto } from '../../dist'
+import { cryptoForage, forage, crypto } from '../../src'
 // import { handler } from 'src/utils/handler'
 
 /**
@@ -61,7 +61,7 @@ describe('[cryptoForage] - enBox', () => {
       name: 'box',
       loggerType: 'throw',
       returnType: 7 // change this for other details
-    })(NACL_COMMON.msg)
+    } as any)(NACL_COMMON.msg)
     console.log(boxFn)
     expect(!!boxFn).toBe(true)
   })
@@ -75,7 +75,7 @@ describe('[cryptoForage] - enBox', () => {
       name: 'box',
       loggerType: 'throw',
       returnType: 7
-    })(NACL_COMMON.msg)
+    } as any)(NACL_COMMON.msg)
     console.log(boxed)
     expect(!!boxed).toStrictEqual(true)
   })
@@ -140,7 +140,7 @@ describe('[cryptoForage] - deBox', () => {
       key: 'user3',
       value: NACL_COMMON.msg,
       before: true
-    })(boxed)
+    } as any)(boxed)
 
     console.log(set3)
     expect(set3.length).toStrictEqual(108)
@@ -167,7 +167,7 @@ describe('[cryptoForage] - enBox', () => {
       name: 'box',
       returnType: 'default',
       loggerType: 'string'
-    })(NACL_COMMON.msg).then(val => {
+    } as any)(NACL_COMMON.msg).then(val => {
       console.log(val)
       expect(val.length).toStrictEqual(108)
     })
@@ -184,11 +184,11 @@ describe('[cryptoForage] - enBox benchmark', () => {
         returnType: 'default',
         loggerType: 'console'
       })
-      await forage.setItem({ key: 'user_keys', value: NACL_COMMON.msg, before: true })(boxed)
+      await forage.setItem({ key: 'user_keys', value: NACL_COMMON.msg, before: true } as any)(boxed)
     }
     const end = new Date()
-    console.log(end - start)
-    expect(end - start).toBeLessThan(1000)
+    console.log(end.valueOf() - start.valueOf())
+    expect(end.valueOf() - start.valueOf()).toBeLessThan(1000)
   })
 })
 
@@ -202,7 +202,7 @@ describe('[cryptoForage] - deBox', () => {
         id: NACL_COMMON.id,
         token: NACL_COMMON.token
       }
-    })()
+    } as any)()
     console.log(first)
     const boxed = cryptoForage.enBox({
       key: NACL_COMMON.key,
@@ -213,7 +213,7 @@ describe('[cryptoForage] - deBox', () => {
       key: 'user3',
       value: NACL_COMMON.msg,
       before: true
-    })(boxed)
+    } as any)(boxed)
     console.log(set3)
     expect(set3.length).toStrictEqual(108)
     const t = await forage.getItem({ key: 'user3' })()
@@ -241,7 +241,7 @@ describe('[cryptoForage] - deBox', () => {
         id: NACL_COMMON.id,
         token: NACL_COMMON.token
       }
-    })()
+    } as any)()
     console.log(first)
     const boxed = cryptoForage.enBox({
       key: NACL_COMMON.key,
@@ -252,7 +252,7 @@ describe('[cryptoForage] - deBox', () => {
       key: 'user3',
       value: NACL_COMMON.msg,
       before: true
-    })(boxed)
+    } as any)(boxed)
     console.log(set3)
     expect(set3.length).toStrictEqual(108)
     const t = await forage.getItem({ key: 'user3' })()
@@ -281,7 +281,7 @@ describe('[cryptoForage] - deBox with model proof', () => {
         id: NACL_COMMON.id,
         token: NACL_COMMON.token
       }
-    })()
+    } as any)()
     console.log(first)
     const boxed = cryptoForage.enBox({
       key: NACL_COMMON.key,
@@ -292,7 +292,7 @@ describe('[cryptoForage] - deBox with model proof', () => {
       key: 'user3',
       value: NACL_COMMON.msg,
       before: true
-    })(boxed)
+    } as any)(boxed)
     console.log(set3)
     expect(set3.length).toStrictEqual(108)
     const t = await forage.getItem({ key: 'user3' })()

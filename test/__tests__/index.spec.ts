@@ -3,7 +3,7 @@ import {
   cryptoForage,
   handler,
   crypto
-} from '../../dist'
+} from '../../src'
 
 // these are just tests to make sure we are exporting properly
 
@@ -18,12 +18,12 @@ test('cryptoForage', async () => {
   expect(res).toBe('function')
 })
 test('handler', async () => {
-  const instance = await handler.returner()
+  const instance = await (handler as any).returner()
   const res = typeof instance
   expect(res).toBe('function')
 })
 test('crypto', async () => {
-  let instance = await crypto.nonce()
+  let instance: any = await crypto.nonce()
   let res = typeof instance
   expect(res).toBe('object')
   instance = await crypto.hash('something')

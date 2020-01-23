@@ -1,6 +1,6 @@
 /* eslint no-undef: 0 */
 
-import { handler } from '../../dist'
+import { handler } from '../../src'
 
 /*********************************************************************************
  *
@@ -11,25 +11,25 @@ import { handler } from '../../dist'
 
 describe('[Forage]:internals (maybeCurry)', () => {
   it('applies function to the value', async () => {
-    let curryFn = (val) => { return val + 1 }
+    let curryFn = (val: any) => { return val + 1 }
     expect(handler.maybeCurry(curryFn)(1)).toStrictEqual(2)
-    curryFn = (val) => val.toUpperCase()
+    curryFn = (val: any) => val.toUpperCase()
     expect(handler.maybeCurry(curryFn)('jane')).not.toStrictEqual('Jane')
     expect(handler.maybeCurry(curryFn)('jane')).toStrictEqual('JANE')
   })
   it('works with arrow functions 1', async () => {
-    let curryFn = (val) => val.toUpperCase()
+    let curryFn = (val: any) => val.toUpperCase()
     expect(handler.maybeCurry(curryFn)('hello')).toStrictEqual('HELLO')
   })
   it('works with arrow functions 2', async () => {
-    let curryFn = (val) => {
+    let curryFn = (val: any) => {
       val += 1
       return val
     }
     expect(handler.maybeCurry(curryFn)(1)).toStrictEqual(2)
   })
   it('works with arrow functions 3', async () => {
-    let curryFn = (val) => {
+    let curryFn = (val: any) => {
       val++
       return val
     }
@@ -37,14 +37,14 @@ describe('[Forage]:internals (maybeCurry)', () => {
   })
 
   it('works with async functions using await', async () => {
-    let curryFn = async (val) => {
+    let curryFn = async (val: any) => {
       const thing = val + 1
       return thing
     }
     expect(await handler.maybeCurry(curryFn)(1)).toStrictEqual(2)
   })
   it('won\'t resolve async functions without using await', async () => {
-    let curryFn = async (val) => {
+    let curryFn = async (val: any) => {
       const thing = val + 1
       return thing
     }
@@ -55,23 +55,23 @@ describe('[Forage]:internals (maybeCurry)', () => {
   it('applies nothing to the value if function not passed', async () => {
     expect(handler.maybeCurry(void 0)(false)).toStrictEqual(false)
     expect(handler.maybeCurry(undefined)(false)).toStrictEqual(false)
-    expect(handler.maybeCurry('')(false)).toStrictEqual(false)
-    expect(handler.maybeCurry([])(false)).toStrictEqual(false)
-    expect(handler.maybeCurry({})(false)).toStrictEqual(false)
-    expect(handler.maybeCurry(true)(false)).toStrictEqual(false)
+    expect(handler.maybeCurry('' as any)(false)).toStrictEqual(false)
+    expect(handler.maybeCurry([] as any)(false)).toStrictEqual(false)
+    expect(handler.maybeCurry({} as any)(false)).toStrictEqual(false)
+    expect(handler.maybeCurry(true as any)(false)).toStrictEqual(false)
   })
 })
 
 describe('[Forage]:internals (logger)', () => {
   it('returns nothing if given nothing', async () => {
-    expect(handler.logger()()).toStrictEqual(void 0)
+    expect((handler.logger as any)()()).toStrictEqual(void 0)
   })
   it('returns nothing by default', async () => {
     expect(handler.logger('hello')()).toStrictEqual(void 0)
-    expect(handler.logger()()).toStrictEqual(void 0)
+    expect((handler.logger as any)()()).toStrictEqual(void 0)
   })
   it('returns nothing if you use an unavailable logger', async () => {
-    expect(handler.logger('hello')('notavailable')).toStrictEqual(void 0)
+    expect(handler.logger('hello')('notavailable' as any)).toStrictEqual(void 0)
   })
   it('returns nothing if you use "none" or undefined', async () => {
     expect(handler.logger('hello')('none')).toStrictEqual(void 0)
@@ -79,27 +79,27 @@ describe('[Forage]:internals (logger)', () => {
   })
   it('returns a string (double-curry style)', async () => {
     expect(handler.logger('hello')()).toStrictEqual(void 0)
-    expect(handler.logger('[Err]: Unknown')('string')).toStrictEqual('[Err]: Unknown', 'string')
+    expect(handler.logger('[Err]: Unknown')('string')).toStrictEqual('[Err]: Unknown')
   })
   it('returns a string (curry style)', async () => {
     expect(handler.logger('hello')()).toStrictEqual(void 0)
-    expect(handler.logger('[Err]: Unknown')('string')).toStrictEqual('[Err]: Unknown', 'string')
+    expect(handler.logger('[Err]: Unknown')('string')).toStrictEqual('[Err]: Unknown')
   })
   it('returns a string (callback style)', async () => {
     expect(handler.logger('hello')()).toStrictEqual(void 0)
-    expect(handler.logger('[Err]: Unknown', 'string')()).toStrictEqual('[Err]: Unknown', 'string')
+    expect(handler.logger('[Err]: Unknown', 'string')()).toStrictEqual('[Err]: Unknown')
   })
   it('returns a console message', async () => {
     // not sure exactly how to trace this
     jest.spyOn(console, 'trace')
     handler.logger('message')('trace')
-    expect(console.trace.mock.calls[0][0]).toBe('TRACE: message')
+    expect((console.trace as any).mock.calls[0][0]).toBe('TRACE: message')
     jest.clearAllMocks()
   })
   it('returns a console message', async () => {
     jest.spyOn(console, 'error')
     handler.logger('hello')('console')
-    expect(console.error.mock.calls[0][0]).toBe('hello')
+    expect((console.error as any).mock.calls[0][0]).toBe('hello')
     jest.clearAllMocks()
   })
   it('returns a console message but doesn\'t propegate', async () => {
@@ -130,7 +130,7 @@ describe('[Forage]:internals (logger)', () => {
 
 describe('[Forage]:internals (returner)', () => {
   it('returns nothing if given nothing', async () => {
-    expect(handler.returner()()).toStrictEqual(void 0)
+    expect((handler.returner as any)()()).toStrictEqual(void 0)
   })
   it('returns message by default', async () => {
     expect(handler.returner('hello')(0)).toStrictEqual('hello')
@@ -149,7 +149,7 @@ describe('[Forage]:internals (returner)', () => {
   it('returns a console message', async () => {
     jest.spyOn(console, 'log')
     handler.returner('console message')(2)
-    expect(console.log.mock.calls[0][0]).toBe('console message')
+    expect((console.log as any).mock.calls[0][0]).toBe('console message')
     jest.clearAllMocks()
   })
   it('returns a console message but doesn\'t propegate', async () => {
@@ -164,7 +164,7 @@ describe('[Forage]:internals (returner)', () => {
   })
   it('Returns no result if there is an error and the val is empty', async () => {
     try {
-      handler.returner()(3)
+      (handler.returner as any)()(3)
     } catch (e) {
       expect(e.message).toBe('No result')
     }
@@ -229,7 +229,7 @@ describe('[Forage]:internals (returner)', () => {
     expect(handler.returner(42)(5)).toStrictEqual('number')
   })
   it('returns number if the value is an number', async () => {
-    const fn = x => 5
+    const fn = (x: any) => 5
     expect(handler.returner(fn)(5)).toStrictEqual('function')
   })
   it('returns number if the value is an number', async () => {
@@ -239,7 +239,7 @@ describe('[Forage]:internals (returner)', () => {
   it('returns number if the value is an number', async () => {
     jest.spyOn(console, 'trace')
     handler.returner('message')('trace')
-    expect(console.trace.mock.calls[0][0]).toBe('TRACE: message')
+    expect((console.trace as any).mock.calls[0][0]).toBe('TRACE: message')
     jest.clearAllMocks()
   })
   it('returns the value if the type is an unmapped number', async () => {
@@ -288,7 +288,7 @@ describe('[Forage]:internals (jsonPurify)', () => {
     const result = await handler.jsonPurify({
       model: model,
       length: 10
-    })(JSON.stringify(objectSafe))
+    } as any)(JSON.stringify(objectSafe))
     expect(result).toStrictEqual({ 'name': 'Ada', 'type': 'dead' })
   })
 
