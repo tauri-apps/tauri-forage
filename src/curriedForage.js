@@ -417,7 +417,7 @@ const forage = {
   },
 
   // todo: when purging data, this will be important.
-  dropInstance: async function (name) {
+  dropInstance: async function ({ name }) {
     return localForage.dropInstance({ name: name }).then(() => {
       return true
     }).catch(err => {
@@ -437,7 +437,7 @@ const forage = {
       return false
     })
   },
-  dropStore (name, storeName) {
+  dropStore ({ name, storeName }) {
     return localForage.dropInstance({
       name: name,
       storeName: storeName
