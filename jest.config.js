@@ -13,7 +13,7 @@ module.exports = {
   collectCoverage: true,
   coverageDirectory: '<rootDir>/test/jest/coverage',
   collectCoverageFrom: [
-    '<rootDir>/src/**/*.js'
+    '<rootDir>/src/**/*.ts'
   ],
   coverageReporters: [
     'json-summary',
@@ -28,9 +28,10 @@ module.exports = {
     }
   },
   testMatch: [
-    '<rootDir>/test/__tests__/**/*.spec.js'
+    '<rootDir>/test/__tests__/**/*.spec.ts'
   ],
   moduleFileExtensions: [
+    'ts',
     'js',
     'json'
   ],
@@ -39,7 +40,7 @@ module.exports = {
     '^src/(.*)$': '<rootDir>/src/$1',
   },
   transform: {
-    '.*\\.js$': 'babel-jest',
+    '.*\\.ts$': 'ts-jest',
 
   },
   transformIgnorePatterns: [
