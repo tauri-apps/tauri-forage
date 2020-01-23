@@ -84,7 +84,7 @@ const forage = {
    * @memberof forage
    */
   getItem ({ key, logger, returner, before, store }: BeforeItem = {}) {
-    return async function (curry: MaybeFunction) {
+    return async function (curry?: MaybeFunction) {
       const storage = await _defineStore({ store: store })
       key = before ? await handler.maybeCurry(curry || null)(key) : key
       return handler.returner(
@@ -110,7 +110,7 @@ const forage = {
    * @memberof forage
    */
   getKeyValue ({ key, value, logger, returner, before, store }: KeyValueItem = {}) {
-    return async function (curry: MaybeFunction) {
+    return async function (curry?: MaybeFunction) {
       const storage = await _defineStore({ store: store })
       value = before ? await handler.maybeCurry(curry || null)(value) : value
       return handler.returner(
@@ -139,7 +139,7 @@ const forage = {
    * @memberof forage
    */
   setItem ({ key, value, logger, returner, before, store }: KeyValueItem = {}) {
-    return async function (curry: MaybeFunction) {
+    return async function (curry?: MaybeFunction) {
       const storage = _defineStore({ store: store })
       value = before ? await handler.maybeCurry(curry || null)(value) : value
       return handler.returner(
@@ -198,8 +198,8 @@ const forage = {
    * @memberof forage
    */
   mergeItem ({ key, value, type, returner, logger, before, store }: MergeItem = {}) {
-    const concatValues = (k: string, l: string | any[], r: string | any[]) => k === 'values' ? concat(l, r) : r
-    return async function (curry: MaybeFunction) {
+    const concatValues = (k: string, l: any, r: any) => k === 'values' ? concat(l, r) : r
+    return async function (curry?: MaybeFunction) {
       const storage = _defineStore({ store: store })
       value = before ? await handler.maybeCurry(curry || null)(value) : value
       return handler.returner(
@@ -216,7 +216,7 @@ const forage = {
               }
             case 'right':
               try {
-                val = await storage.setItem(key, mergeRight(v, value))
+                val = await storage.setItem(key, mergeRight(v, value as any))
                 return val
               } catch (err) {
                 /* istanbul ignore next */
@@ -224,7 +224,7 @@ const forage = {
               }
             case 'deepRight':
               try {
-                val = await storage.setItem(key, mergeDeepRight(v, value))
+                val = await storage.setItem(key, mergeDeepRight(v, value as any))
                 return val
               } catch (err) {
                 /* istanbul ignore next */
@@ -270,7 +270,7 @@ const forage = {
   },
 
   removeItem ({ key, logger, returner, before, store }: BeforeItem = {}) {
-    return async function (curry: MaybeFunction) {
+    return async function (curry?: MaybeFunction) {
       key = before ? await handler.maybeCurry(curry || null)(key) : key
       const storage = await _defineStore({ store: store })
       return handler.returner(
@@ -303,8 +303,8 @@ const forage = {
       return handler.logger(err, args[0].logger)
     })
   },
-  clear ({ logger = LoggerType.none, store }: { logger?: MaybeLoggerType, store?: string } = {}) {
-    return async function (curry: MaybeFunction) {
+  clear ({ logger = 'none', store }: { logger?: MaybeLoggerType, store?: string } = {}) {
+    return async function (curry?: MaybeFunction) {
       const storage = await _defineStore({ store: store })
       return storage.clear().then(() => {
         return handler.maybeCurry(curry || null)(true)
@@ -315,7 +315,7 @@ const forage = {
     }
   },
   length ({ logger, returner, store }: { logger?: LoggerType, returner?: ReturnerType, store?: string} = {}) {
-    return async function (curry: MaybeFunction) {
+    return async function (curry?: MaybeFunction) {
       const storage = await _defineStore({ store: store })
       return handler.returner(
         await storage.length().then((v: any) => {
@@ -356,7 +356,7 @@ const forage = {
   },
 
   hasKey ({ key, logger, returner, store }: Item = {}) { // must be a key
-    return async function (curry: MaybeFunction) {
+    return async function (curry?: MaybeFunction) {
       const storage = await _defineStore({ store: store })
       return handler.returner(
         await storage.keys().then((k: string[]) => {
@@ -382,7 +382,7 @@ const forage = {
   },
   */
   hasKeyValue ({ key, value, logger, returner }: { key?: string, value?: string, logger?: LoggerType, returner?: ReturnerType} = {}) { // boolean version of getKeyValue
-    return async function (curry: MaybeFunction) {
+    return async function (curry?: MaybeFunction) {
       return handler.returner(
         await localForage.getItem(key).then((val: any) => {
           return handler.maybeCurry(curry)(!!val[value])
@@ -445,7 +445,7 @@ const forage = {
   },
 
   // todo: when purging data, this will be important.
-  dropInstance: async function (name: string) {
+  dropInstance: async function ({ name }: { name: string }) {
     return localForage.dropInstance({ name: name }).then(() => {
       return true
     }).catch((err: any) => {
@@ -465,7 +465,7 @@ const forage = {
       return false
     })
   },
-  dropStore (name: string, storeName: string) {
+  dropStore ({ name, storeName }: { name: string, storeName: string }) {
     return localForage.dropInstance({
       name: name,
       storeName: storeName

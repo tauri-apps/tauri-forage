@@ -38,7 +38,7 @@ const cryptoForage = {
    */
 
   enBox: function ({ key, loggerType, returnType }: Enbox = {}) {
-    return async function (val: Promise<any>) {
+    return async function (val: any) {
       return handler.returner(
         await crypto.secretBox.encrypt({
           json: await val,

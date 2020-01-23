@@ -7,7 +7,29 @@ import {
   encodeBase64,
   decodeBase64
 } from 'tweetnacl-util'
-import { MaybeUint8Array, Encryptable, Decryptable, EncryptableBox, DecryptableBox } from './types'
+import { MaybeUint8Array } from './types'
+
+export interface Encryptable {
+  json?: object
+  key?: string
+}
+
+export interface Decryptable {
+  msg?: string
+  key?: string
+}
+
+export interface EncryptableBox {
+  json: object
+  key: Uint8Array
+  secretOrSharedKey: Uint8Array
+}
+
+export interface DecryptableBox {
+  secretOrSharedKey: Uint8Array
+  messageWithNonce: string
+  key: Uint8Array
+}
 
 // just a helper for a constant :)
 const keyLength = secretbox.keyLength
