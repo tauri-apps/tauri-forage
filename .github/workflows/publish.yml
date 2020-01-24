@@ -1,0 +1,18 @@
+name: NPM Publish
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Login to NPM
+        run: npm login ${{ secrets.npm_token }}
+      - name: Publish package
+        run: |
+          yarn
+          yarn rollup -c
+          npm publish

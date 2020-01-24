@@ -1,4 +1,5 @@
 test
+docs
 .github
 .babelrc
 .editorconfig
@@ -6,6 +7,12 @@ test
 .eslintignore
 .eslintrc.js
 .gitignore
+.nvmrc
 jest.config.js
 jsconfig.json
 jsdoc.json
+dist/*.ts
+dist/*.js.map
+webpack.config.js
+rollup.config.js
+tsconfig.json

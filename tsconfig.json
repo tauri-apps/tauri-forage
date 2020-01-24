@@ -2,16 +2,17 @@
   "compilerOptions": {
     "outDir": "./dist/",
     "noImplicitAny": true,
-    "module": "AMD",
+    "module": "ES2015",
     "target": "es5",
     "allowJs": true,
     "sourceMap": true,
-    "declaration": true,
     "esModuleInterop": true,
-    "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "declaration": true,
+    "declarationDir": "./dist/",
   },
   "include": [
     "src"
-  ]
+  ],
+  "exclude": ["node_modules"]
 }
