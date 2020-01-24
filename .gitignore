@@ -16,3 +16,4 @@ yarn-error.log*
 
 /test/jest/coverage
 /dist
+.npmrc
