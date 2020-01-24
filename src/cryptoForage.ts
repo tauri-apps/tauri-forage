@@ -3,15 +3,14 @@ import { forage } from './curriedForage'
 import { handler, LoggerType, ReturnerType } from './handler'
 import { Purifiable } from './types'
 
-export interface Enbox { 
+export interface Enbox {
   key?: string
   loggerType?: LoggerType
-  returnType?: ReturnerType 
+  returnType?: ReturnerType
 }
 
 export interface Debox extends Enbox, Purifiable {}
 
-// import { validateJson } from '../utils/validate'
 /**
  * @description Use currying process to inject
  * @namespace

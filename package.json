@@ -40,7 +40,6 @@
   "dependencies": {
     "localforage": "^1.7.3",
     "ramda": "^0.26.1",
-    "tslib": "^1.10.0",
     "tweetnacl": "^1.0.1",
     "tweetnacl-util": "^0.15.0"
   },
@@ -71,8 +70,6 @@
     "promise": "^8.0.2",
     "rollup": "^1.29.1",
     "rollup-plugin-babel": "^4.3.3",
-    "rollup-plugin-node-builtins": "^2.1.2",
-    "rollup-plugin-node-globals": "^1.4.0",
     "rollup-plugin-terser": "^5.2.0",
     "rollup-plugin-typescript2": "^0.25.3",
     "ts-jest": "^24.3.0",

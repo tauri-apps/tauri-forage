@@ -1,8 +1,6 @@
 // rollup.config.js
 import { terser } from 'rollup-plugin-terser'
 import resolve from '@rollup/plugin-node-resolve'
-import builtins from 'rollup-plugin-node-builtins'
-import globals from 'rollup-plugin-node-globals'
 import typescript from 'rollup-plugin-typescript2'
 import pkg from './package.json'
 
@@ -59,8 +57,6 @@ export default {
     */
   ],
   plugins: [
-    globals(),  // make sure we need this
-    builtins(), // make sure we need this
     typescript({
       typescript: require('typescript'),
     }),
