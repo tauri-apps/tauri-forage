@@ -25,7 +25,7 @@ jobs:
       run: |
         echo "//registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN" > ~/.npmrc
         echo "_auth=$NODE_AUTH_TOKEN" >> .npmrc
-        echo "email=<tauri-ci@tauri.studio>"" >> .npmrc
+        echo "email=<tauri-ci@tauri.studio>" >> .npmrc
         echo "always-auth=true" >> .npmrc
       env:
         NODE_AUTH_TOKEN: ${{ secrets.npm_token }}
