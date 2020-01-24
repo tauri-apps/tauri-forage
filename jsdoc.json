@@ -1,0 +1,41 @@
+{
+  "tags": {
+    "allowUnknownTags": true,
+    "dictionaries": [
+      "jsdoc"
+    ]
+  },
+  "source": {
+    "include": [
+      "src",
+      "package.json",
+      "README.md"
+    ],
+    "includePattern": ".js$|.ts$",
+    "excludePattern": "(node_modules/|docs)"
+  },
+  "plugins": [
+    "plugins/markdown",
+    "node_modules/jsdoc-mermaid",
+    "node_modules/better-docs/category",
+    "node_modules/better-docs/component"
+  ],
+  "templates": {
+    "default": {
+      "includeDate": false
+    },
+    "cleverLinks": true,
+    "monospaceLinks": false,
+    "better-docs": {
+      "name": "curriedForage Documentation"
+    }
+  },
+  "opts": {
+    "destination": "./docs/",
+    "encoding": "utf8",
+    "readme": "README.md",
+    "recurse": true,
+    "verbose": true,
+    "template": "node_modules/better-docs"
+  }
+}
