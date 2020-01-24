@@ -16,14 +16,11 @@ jobs:
         # specify node version and the registry for the RELEASE build
         node-version: 12
         registry-url: https://registry.npmjs.org/
-    - name: Login to NPM
-      run: npm login ${{ secrets.npm_token }}
+    - name: Set token to .npmrc
+      run: echo "//registry.npmjs.org/:_authToken=${{ secrets.npm_token }}" > ~/.npmrc
     - name: Publish package
       run: |
         npm install -g yarn
         yarn install
         yarn rollup -c
         NODE_ENV=production npm publish --access public
-      env:
-        # Add to github settings/secrets
-        NODE_AUTH_TOKEN: ${{secrets.npm_token}}
