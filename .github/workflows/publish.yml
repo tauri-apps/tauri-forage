@@ -9,10 +9,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Login to NPM
-        run: npm login ${{ secrets.npm_token }}
+      uses: actions/setup-node@v1
+      with:
+        # specify node version and the registry for the RELEASE build
+        node-version: 12
+        registry-url: https://registry.npmjs.org/
       - name: Publish package
         run: |
           yarn
           yarn rollup -c
-          npm publish
+          npm ci
+          NODE_ENV=production npm publish --access public
+        env:
+          # Add to github settings/secrets
+          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
