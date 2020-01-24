@@ -29,14 +29,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tauri-apps/curriedForage.git"
+    "url": "git+https://github.com/tauri-apps/tauri-forage.git"
   },
   "author": "Daniel Thompson-Yvetot",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/tauri-apps/curriedForage/issues"
+    "url": "https://github.com/tauri-apps/tauri-forage/issues"
   },
-  "homepage": "https://github.com/tauri-apps/curriedForage#readme",
+  "homepage": "https://github.com/tauri-apps/tauri-forage#readme",
   "dependencies": {
     "localforage": "^1.7.3",
     "ramda": "^0.26.1",
