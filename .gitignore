@@ -15,3 +15,4 @@ yarn-error.log*
 .c9
 
 /test/jest/coverage
+/dist
