@@ -18,9 +18,9 @@ jobs:
         registry-url: https://registry.npmjs.org/
     - name: Publish package
       run: |
-        yarn
+        npm install -g yarn
+        yarn install
         yarn rollup -c
-        npm ci
         NODE_ENV=production npm publish --access public
       env:
         # Add to github settings/secrets
