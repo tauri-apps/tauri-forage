@@ -17,7 +17,7 @@ jobs:
         node-version: 12
         registry-url: https://registry.npmjs.org/
     - name: Set token to .npmrc
-        echo "//registry.npmjs.org/:_authToken=${{ secrets.npm_token }}" > ~/.npmrc
+      run: echo "//registry.npmjs.org/:_authToken=${{ secrets.npm_token }}" > ~/.npmrc
     - name: Publish package
       run: |
         npm install -g yarn
