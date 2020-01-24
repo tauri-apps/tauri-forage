@@ -13,3 +13,5 @@ yarn-error.log*
 *.njsproj
 *.sln
 .c9
+
+/test/jest/coverage
