@@ -1,3 +1,13 @@
+import { MaybeFunction, Empty, Purifiable } from './types'
+
+export type ReturnerType = string | number | object;
+
+export type MaybeReturnerType = ReturnerType | Empty 
+
+export type LoggerType = 'none' | 'string' | 'trace' | 'console' | 'throw' 
+
+export type MaybeLoggerType = LoggerType | Empty
+
 /* eslint no-fallthrough: 0 */
 
 /**
@@ -24,13 +34,13 @@ export const handler = {
    * @category handler
    * @memberof handler
    * @param {*} val
-   * @param {number|string} type
+   * @param {MaybeReturnerType} type
    * @throws {Error} the message it is passed (if type 3)
    * @returns {*}
    * @function
    */
-  returner (val, type) {
-    return function (returnerType) {
+  returner (val: any, type: MaybeReturnerType) {
+    return function (returnerType?: ReturnerType) {
       if (!type) {
         type = returnerType
       }
@@ -63,7 +73,7 @@ export const handler = {
             if (val === void 0) return 'undefined'
             if (val instanceof Error) return 'error'
             try {
-              val.map(v => v)
+              val.map((v: any) => v)
               return 'array'
             } catch (e) {
               return typeof val
@@ -95,11 +105,11 @@ export const handler = {
    * @category handler
    * @memberof handler
    * @param {*} msg
-   * @param {string} type
+   * @param {MaybeLoggerType} type
    * @throws {Error} - just the message it is passed
    * @returns {*}
    */
-  logger (msg, type) {
+  logger (msg: any, type: MaybeLoggerType) {
     // todo: discuss making things silent in production
     /*
     // set with a variable
@@ -111,7 +121,7 @@ export const handler = {
     // delegate from .env (still global, most flexible)
     ? process.env.LOGGING ? type = process.env.LOGGING : void 0
     */
-    return function (loggerType) {
+    return function (loggerType?: LoggerType) {
       if (!type) {
         type = loggerType
       }
@@ -155,8 +165,8 @@ export const handler = {
    * @returns {*}
    * @function
    */
-  maybeCurry (fn) {
-    return (val) => {
+  maybeCurry (fn: MaybeFunction) {
+    return (val: any) => {
       /* also works - just seems dirty (and dangerous)
       try {
         return fn(val)
@@ -181,12 +191,13 @@ export const handler = {
    * @param {number} maxLen - max length of model
    * @function
    */
-  jsonPurify ({ model, maxLen } = {}) {
-    let parsedObj, safeObj = {}
+  jsonPurify ({ model, maxLen }: Purifiable = {}) {
+    let parsedObj: any
+    let safeObj: { [key: string]: any } = {}
     /**
      * @param {string}
      */
-    return async function (str) {
+    return async function (str: string) {
       try {
         if (maxLen && str.length > maxLen) {
           return null

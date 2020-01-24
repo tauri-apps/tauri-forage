@@ -2,7 +2,7 @@
   "name": "@tauri-apps/curriedforage",
   "version": "1.0.0-alpha.0",
   "description": "enhanced localForage with curry and crypto - for any browser and device",
-  "main": "index.js",
+  "main": "dist/index.js",
   "directories": {
     "src": "src",
     "test": "test"
@@ -14,7 +14,8 @@
     "test:unit:watch": "jest --watch",
     "test:unit:watchAll": "jest --watchAll",
     "transpile": "npx babel ./lib --out-dir ./dist && npx eslint ./dist/*.js ./dist/*.js --fix",
-    "makeDocs": "jsdoc -c './jsdoc.json' -d docs && git add './docs/*'"
+    "makeDocs": "jsdoc -c './jsdoc.json' -d docs && git add './docs/*'",
+    "build": "webpack --progress"
   },
   "repository": {
     "type": "git",
@@ -36,6 +37,8 @@
     "@babel/cli": "^7.6.4",
     "@babel/core": "^7.6.4",
     "@babel/preset-env": "^7.6.3",
+    "@types/jest": "^24.9.0",
+    "@types/ramda": "^0.26.39",
     "babel-eslint": "^10.0.3",
     "babel-jest": "^24.9.0",
     "babel-plugin-transform-relative-paths": "^0.1.0",
@@ -51,7 +54,12 @@
     "jsdoc-mermaid": "^1.0.0",
     "lint-staged": "^9.4.2",
     "postinstall-postinstall": "^2.0.0",
-    "promise": "^8.0.2"
+    "promise": "^8.0.2",
+    "ts-jest": "^24.3.0",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.7.5",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10"
   },
   "engines": {
     "node": ">= 10.18.1",

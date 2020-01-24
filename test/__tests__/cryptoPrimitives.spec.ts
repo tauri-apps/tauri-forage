@@ -1,6 +1,6 @@
 /* eslint no-undef: 0 */
 
-import { crypto } from 'src/cryptoPrimitives'
+import { crypto } from '../../src'
 
 // todo  =  mock nonce (aka crypto and remove test function)
 

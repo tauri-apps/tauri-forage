@@ -7,7 +7,33 @@ import {
   mergeWith,
   mergeWithKey,
   concat } from 'ramda'
-import { handler } from './handler'
+import { handler, LoggerType, ReturnerType, MaybeLoggerType } from './handler'
+import { MaybeFunction } from './types'
+
+export type Store = {}
+
+export interface Item {
+  key?: string
+  logger?: LoggerType
+  returner?: ReturnerType
+  store?: string
+}
+
+export interface BeforeItem extends Item{ 
+  before?: boolean
+}
+
+export interface IndexItem extends BeforeItem {
+  index?: number
+}
+
+export interface KeyValueItem extends BeforeItem {
+  value?: string
+}
+
+export interface MergeItem extends KeyValueItem {
+  type?: string;
+}
 
 // todo: rename keys to rows / row, values to keys
 
@@ -57,14 +83,14 @@ const forage = {
    * @function getItem
    * @memberof forage
    */
-  getItem ({ key, logger, returner, before, store } = {}) {
-    return async function (curry) {
+  getItem ({ key, logger, returner, before, store }: BeforeItem = {}) {
+    return async function (curry?: MaybeFunction) {
       const storage = await _defineStore({ store: store })
       key = before ? await handler.maybeCurry(curry || null)(key) : key
       return handler.returner(
-        storage.getItem(key).then(async (v) => {
+        storage.getItem(key).then(async (v: any) => {
           return !before ? handler.maybeCurry(curry || null)(v) : v
-        }).catch(err => {
+        }).catch((err: any) => {
           /* istanbul ignore next */
           return handler.logger(err, logger)
         })
@@ -83,15 +109,15 @@ const forage = {
    * @function getKeyValue
    * @memberof forage
    */
-  getKeyValue ({ key, value, logger, returner, before, store } = {}) {
-    return async function (curry) {
+  getKeyValue ({ key, value, logger, returner, before, store }: KeyValueItem = {}) {
+    return async function (curry?: MaybeFunction) {
       const storage = await _defineStore({ store: store })
       value = before ? await handler.maybeCurry(curry || null)(value) : value
       return handler.returner(
-        storage.getItem(key).then(v => {
+        storage.getItem(key).then((v: any) => {
           // console.log(v)
           return !before ? handler.maybeCurry(curry || null)(v[value]) : v[value]
-        }).catch(err => {
+        }).catch((err: any) => {
           /* istanbul ignore next */
           return handler.logger(err, logger)
         })
@@ -112,14 +138,14 @@ const forage = {
    * @function setItem
    * @memberof forage
    */
-  setItem ({ key, value, logger, returner, before, store } = {}) {
-    return async function (curry) {
+  setItem ({ key, value, logger, returner, before, store }: KeyValueItem = {}) {
+    return async function (curry?: MaybeFunction) {
       const storage = _defineStore({ store: store })
       value = before ? await handler.maybeCurry(curry || null)(value) : value
       return handler.returner(
-        storage.setItem(key, value).then(async v => {
+        storage.setItem(key, value).then(async (v: any) => {
           return !before ? handler.maybeCurry(curry || null)(v) : v
-        }).catch(err => {
+        }).catch((err: any) => {
           /* istanbul ignore next */
           return handler.logger(err, logger)
         })
@@ -137,14 +163,14 @@ const forage = {
    * @function setItem
    * @memberof forage
    */
-  key ({ index, logger, returner, before, store } = {}) {
-    return async function (curry) {
+  key ({ index, logger, returner, before, store }: IndexItem = {}) {
+    return async function (curry: MaybeFunction) {
       const storage = await _defineStore({ store: store })
       index = before ? await handler.maybeCurry(curry || null)(index) : index
       return handler.returner(
-        storage.key(index).then(v => {
+        storage.key(index).then((v: any) => {
           return !before ? handler.maybeCurry(curry || null)(v) : v
-        }).catch(err => {
+        }).catch((err: any) => {
           /* istanbul ignore next */
           return handler.logger(err, logger)
         })
@@ -171,18 +197,18 @@ const forage = {
    * @function mergeItem
    * @memberof forage
    */
-  mergeItem ({ key, value, type, returner, logger, before, store } = {}) {
-    const concatValues = (k, l, r) => k === 'values' ? concat(l, r) : r
-    return async function (curry) {
+  mergeItem ({ key, value, type, returner, logger, before, store }: MergeItem = {}) {
+    const concatValues = (k: string, l: any, r: any) => k === 'values' ? concat(l, r) : r
+    return async function (curry?: MaybeFunction) {
       const storage = _defineStore({ store: store })
       value = before ? await handler.maybeCurry(curry || null)(value) : value
       return handler.returner(
-        await storage.getItem(key).then(async v => {
+        await storage.getItem(key).then(async (v: any) => {
           let val
           switch (type) {
             case 'custom':
               try {
-                val = await storage.setItem(key, await handler.maybeCurry(curry)(v, value))
+                val = await storage.setItem(key, await handler.maybeCurry(curry)(v))
                 return val
               } catch (err) {
                 /* istanbul ignore next */
@@ -190,7 +216,7 @@ const forage = {
               }
             case 'right':
               try {
-                val = await storage.setItem(key, mergeRight(v, value))
+                val = await storage.setItem(key, mergeRight(v, value as any))
                 return val
               } catch (err) {
                 /* istanbul ignore next */
@@ -198,7 +224,7 @@ const forage = {
               }
             case 'deepRight':
               try {
-                val = await storage.setItem(key, mergeDeepRight(v, value))
+                val = await storage.setItem(key, mergeDeepRight(v, value as any))
                 return val
               } catch (err) {
                 /* istanbul ignore next */
@@ -236,21 +262,21 @@ const forage = {
                 return handler.logger(err, logger)
               }
           }
-        }).catch(err => {
+        }).catch((err: any) => {
           /* istanbul ignore next */
           return handler.logger(err, logger)
         }))(returner)
     }
   },
 
-  removeItem ({ key, logger, returner, before, store } = {}) {
-    return async function (curry) {
+  removeItem ({ key, logger, returner, before, store }: BeforeItem = {}) {
+    return async function (curry?: MaybeFunction) {
       key = before ? await handler.maybeCurry(curry || null)(key) : key
       const storage = await _defineStore({ store: store })
       return handler.returner(
         await storage.removeItem(key).then(() => {
           return true // !before ? handler.maybeCurry(curry || null)(true) : true
-        }).catch(err => {
+        }).catch((err: any) => {
           /* istanbul ignore next */
           return handler.logger(err, logger)
         })
@@ -258,43 +284,43 @@ const forage = {
     }
   },
 
-  deleteItemKey: async function (key, value, ...restArgs) {
+  deleteItemKey: async function (key: string, value: string | string[], ...restArgs: any[]) {
     const args = _mapArgs(restArgs)
-    return localForage.getItem(key).then((val) => {
+    return localForage.getItem(key).then((val: any) => {
       if (typeof value === 'string') {
         delete val[value]
       } else if (typeof value === typeof []) {
-        value.forEach(v => delete val[v])
+        value.forEach((v) => delete val[v])
       }
-      return localForage.setItem(key, val).then((val) => {
+      return localForage.setItem(key, val).then((val: any) => {
         return val
-      }).catch(err => {
+      }).catch((err: any) => {
         /* istanbul ignore next */
-        return handler.logger(err, args.logger)
+        return handler.logger(err, args[0].logger)
       })
-    }).catch(err => {
+    }).catch((err: any) => {
       /* istanbul ignore next */
-      return handler.logger(err, args.logger)
+      return handler.logger(err, args[0].logger)
     })
   },
-  clear ({ logger = 'none', store } = {}) {
-    return async function (curry) {
+  clear ({ logger = 'none', store }: { logger?: MaybeLoggerType, store?: string } = {}) {
+    return async function (curry?: MaybeFunction) {
       const storage = await _defineStore({ store: store })
       return storage.clear().then(() => {
         return handler.maybeCurry(curry || null)(true)
-      }).catch(err => {
+      }).catch((err: any) => {
         /* istanbul ignore next */
         return handler.logger(err, logger)
       })
     }
   },
-  length ({ logger, returner, store } = {}) {
-    return async function (curry) {
+  length ({ logger, returner, store }: { logger?: LoggerType, returner?: ReturnerType, store?: string} = {}) {
+    return async function (curry?: MaybeFunction) {
       const storage = await _defineStore({ store: store })
       return handler.returner(
-        await storage.length().then(v => {
+        await storage.length().then((v: any) => {
           return handler.maybeCurry(curry || null)(v)
-        }).catch(err => {
+        }).catch((err: any) => {
           /* istanbul ignore next */
           return handler.logger(err, logger)
         })
@@ -315,13 +341,13 @@ const forage = {
     return future()
   },
   */
-  keys ({ logger, returner, store } = {}) {
-    return async function (curry) {
+  keys ({ logger, returner, store }: { logger?: LoggerType, returner?: ReturnerType, store?: any } = {}) {
+    return async function (curry: MaybeFunction) {
       const storage = await _defineStore({ store: store })
       return handler.returner(
-        await storage.keys().then(v => {
+        await storage.keys().then((v: any) => {
           return handler.maybeCurry(curry || null)(v)
-        }).catch(err => {
+        }).catch((err: any) => {
           /* istanbul ignore next */
           return handler.logger(err, logger)
         })
@@ -329,13 +355,13 @@ const forage = {
     }
   },
 
-  hasKey ({ key, logger, returner, store } = {}) { // must be a key
-    return async function (curry) {
+  hasKey ({ key, logger, returner, store }: Item = {}) { // must be a key
+    return async function (curry?: MaybeFunction) {
       const storage = await _defineStore({ store: store })
       return handler.returner(
-        await storage.keys().then(k => {
+        await storage.keys().then((k: string[]) => {
           return handler.maybeCurry(curry || null)(k.includes(key))
-        }).catch(err => {
+        }).catch((err: any) => {
           /* istanbul ignore next */
           return handler.logger(err, logger)
         })
@@ -355,12 +381,12 @@ const forage = {
     })
   },
   */
-  hasKeyValue ({ key, value, logger, returner } = {}) { // boolean version of getKeyValue
-    return async function (curry) {
+  hasKeyValue ({ key, value, logger, returner }: { key?: string, value?: string, logger?: LoggerType, returner?: ReturnerType} = {}) { // boolean version of getKeyValue
+    return async function (curry?: MaybeFunction) {
       return handler.returner(
-        await localForage.getItem(key).then(val => {
+        await localForage.getItem(key).then((val: any) => {
           return handler.maybeCurry(curry)(!!val[value])
-        }).catch(err => {
+        }).catch((err: any) => {
           /* istanbul ignore next */
           return handler.logger(err, logger)
         })
@@ -368,7 +394,7 @@ const forage = {
     }
   },
 
-  iterate (iteratorCallback, callback) { // think ours are better tbh
+  iterate <T, U>(iteratorCallback: (value: T, key: string, iterationNumber: number) => U, callback: (err: any, result: U) => void) { // think ours are better tbh
     localForage.iterate(iteratorCallback, callback)
   },
   // UTILS
@@ -376,7 +402,7 @@ const forage = {
    *
    * @param {object} options
    */
-  config (options) {
+  config (options: any) {
     return localForage.config(options)
   },
   /**
@@ -390,7 +416,7 @@ const forage = {
   ready: async function () {
     return localForage.ready()
       .then(() => true)
-      .catch(err => {
+      .catch((err: any) => {
         /* istanbul ignore next */
         console.error(err)
         /* istanbul ignore next */
@@ -406,21 +432,23 @@ const forage = {
    * @param {string} name
    * @returns {boolean}
    */
-  createInstance ({ name, logger } = {}) {
+  createInstance ({ name, logger }: { name?: string, logger?: any} = {}) {
     // this should also register itself in a list of stores
     return localForage.createInstance({
       name: name || 'curriedForage'
-    }, (success, err) => {
-      /* istanbul ignore next */
-      return err ? handler.logger(err, logger) : success
-    })
+    }
+    // , (success: any, err: any) => {
+    //   /* istanbul ignore next */
+    //   return err ? handler.logger(err, logger) : success
+    // }
+    )
   },
 
   // todo: when purging data, this will be important.
-  dropInstance: async function ({ name }) {
+  dropInstance: async function ({ name }: { name: string }) {
     return localForage.dropInstance({ name: name }).then(() => {
       return true
-    }).catch(err => {
+    }).catch((err: any) => {
       /* istanbul ignore next */
       console.log(err)
       /* istanbul ignore next */
@@ -430,14 +458,14 @@ const forage = {
   dropAll: async function () {
     return localForage.dropInstance({}).then(() => {
       return true
-    }).catch(err => {
+    }).catch((err: any) => {
       /* istanbul ignore next */
       console.log(err)
       /* istanbul ignore next */
       return false
     })
   },
-  dropStore ({ name, storeName }) {
+  dropStore ({ name, storeName }: { name: string, storeName: string }) {
     return localForage.dropInstance({
       name: name,
       storeName: storeName
@@ -459,7 +487,7 @@ const forage = {
  * @returns {Array}
  * @private
  */
-const _mapArgs = function (arr) {
+const _mapArgs = function (arr: any[]) {
   if (arr) {
     const arrint = arr.map(val => {
       let type = typeof val
@@ -480,7 +508,7 @@ const _mapArgs = function (arr) {
   } else return []
 }
 
-const _defineStore = function ({ store } = {}) {
+const _defineStore = function ({ store }: { store?: string } = {}) {
   if (!store) return localForage
   return forage.createInstance({
     name: store
