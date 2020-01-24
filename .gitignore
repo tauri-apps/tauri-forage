@@ -13,3 +13,5 @@ dist
 *.njsproj
 *.sln
 .c9
+
+/test/jest/coverage
