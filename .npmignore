@@ -8,6 +8,7 @@ docs
 .eslintrc.js
 .gitignore
 .nvmrc
+.npmrc
 jest.config.js
 jsconfig.json
 jsdoc.json

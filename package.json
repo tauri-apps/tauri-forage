@@ -1,6 +1,6 @@
 {
-  "name": "@tauri-apps/curriedforage",
-  "version": "1.0.0-alpha.5",
+  "name": "@tauri-apps/tauri-forage",
+  "version": "1.0.0-beta.0",
   "description": "enhanced localForage with curry and crypto - for any browser and device",
   "main": "dist/index.cjs.min.js",
   "module": "dist/index.esm.js",
@@ -29,14 +29,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tauri-apps/curriedForage.git"
+    "url": "git+https://github.com/tauri-apps/tauri-forage.git"
   },
   "author": "Daniel Thompson-Yvetot",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/tauri-apps/curriedForage/issues"
+    "url": "https://github.com/tauri-apps/tauri-forage/issues"
   },
-  "homepage": "https://github.com/tauri-apps/curriedForage#readme",
+  "homepage": "https://github.com/tauri-apps/tauri-forage#readme",
   "dependencies": {
     "localforage": "^1.7.3",
     "ramda": "^0.26.1",
@@ -50,7 +50,7 @@
     "@rollup/plugin-json": "^4.0.1",
     "@rollup/plugin-node-resolve": "^7.0.0",
     "@rollup/plugin-typescript": "^2.1.0",
-    "@types/jest": "^24.9.0",
+    "@types/jest": "^24.9.1",
     "@types/ramda": "^0.26.39",
     "babel-eslint": "^10.0.3",
     "babel-jest": "^24.9.0",
