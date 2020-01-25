@@ -7,11 +7,11 @@
   },
   "source": {
     "include": [
-      "src",
+      "dist",
       "package.json",
       "README.md"
     ],
-    "includePattern": ".js$|.ts$",
+    "includePattern": ".esm.js$",
     "excludePattern": "(node_modules/|docs)"
   },
   "plugins": [
@@ -27,7 +27,7 @@
     "cleverLinks": true,
     "monospaceLinks": false,
     "better-docs": {
-      "name": "curriedForage Documentation"
+      "name": "tauri-orage Documentation"
     }
   },
   "opts": {

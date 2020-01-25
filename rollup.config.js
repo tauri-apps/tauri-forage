@@ -1,6 +1,7 @@
 // rollup.config.js
 import { terser } from 'rollup-plugin-terser'
 import resolve from '@rollup/plugin-node-resolve'
+import commonjs from '@rollup/plugin-commonjs'
 import typescript from 'rollup-plugin-typescript2'
 import pkg from './package.json'
 
@@ -21,7 +22,8 @@ export default {
       format:    'esm',
       sourcemap: true,
       globals:   {
-        readFile: 'this'
+        readFile: 'this',
+        'tweetnacl-util': 'this'
       }
     },
     {
@@ -30,7 +32,8 @@ export default {
       format:  'cjs',
       plugins: [ terser() ],
       globals: {
-        readFile: 'this'
+        readFile: 'this',
+        'tweetnacl-util': 'this'
       }
     },
     /*
@@ -57,6 +60,13 @@ export default {
     */
   ],
   plugins: [
+    commonjs({
+      namedExports: {
+      // left-hand side can be an absolute path, a path
+      // relative to the current directory, or the name
+      // of a module in node_modules
+      'tweet-nacl': ['secretbox']
+    }}),
     typescript({
       typescript: require('typescript'),
     }),
