@@ -1,0 +1,804 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>JSDoc: curriedForage.esm.js</title>
+
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="./build/entry.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link href="https://fonts.googleapis.com/css?family=Muli:100,400,700|Oswald:300|Inconsolata,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+</head>
+
+<body>
+    <div id="stickyNavbarOverlay"></div>
+    <div class="top-navbar">
+        <div class="container">
+            <nav class="navbar" role="navigation" aria-label="main navigation">
+                <div class="navbar-brand">
+                    
+                     
+                        <h1 class="navbar-item">tauri-forage Documentation</h1>
+                    
+                    <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </a>
+                </div>
+                
+            </nav>
+        </div>
+    </div>
+    <div class="container">
+        <div class="columns">
+            <div class="column is-3" id="sidebarNav">
+                <div class="sidebar">
+                    <nav>
+                        <h2><a href="index.html">Home</a></h2><div class="category"></div><div class="category"><h2>crypto</h2><h3>Namespaces</h3><ul><li><a href="crypto.html">crypto</a></li><li><a href="crypto.box.html">box</a></li><li><a href="crypto.secretBox.html">secretBox</a></li></ul></div><div class="category"><h2>forage</h2><h3>Namespaces</h3><ul><li><a href="cryptoForage.html">cryptoForage</a></li><li><a href="forage.html">forage</a></li></ul></div><div class="category"><h2>handler</h2><h3>Namespaces</h3><ul><li><a href="handler.html">handler</a></li></ul></div>
+                    </nav>
+                </div>
+            </div>
+            <div class="column is-9-desktop">
+                <div class="content" id="main-content-wrapper">
+                    <header class="page-title">
+                        <p>Source</p>
+                        <h1>curriedForage.esm.js</h1>
+                    </header>
+                    
+                    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { _ as __awaiter, a as __generator } from './_tslib-ca2dd4fc.js';
+import { handler } from './handler.esm.js';
+import localForage from 'localforage';
+import { mergeDeepWithKey, mergeDeepWith, concat, mergeWithKey, mergeWith, mergeDeepRight, mergeRight } from 'ramda';
+
+// todo: rename keys to rows / row, values to keys
+/**
+ *  @description -> externally, we are using the same API as localForage,
+ *  with the exception of the dropInstance interface, which, while
+ *  still available, has been split out into three distinct calls.
+ *  Also, are using `.then` instead of the callback approach, and
+ *  always catch an error.
+ *
+ *  Of note are the extensions to the generic interface:
+ *  - mergeItem (with a number of merge strategies available)
+ *  - getKeyValue
+ *  - deleteItemKey
+ *  - hasKey
+ *  - hasKeyValue
+ *
+ *  Note:
+ *  Even if undefined is saved, null will be returned by getItem().
+ *  This is due to a limitation in localStorage, and for compatibility
+ *  reasons localForage cannot store the value undefined.
+ *
+ * Usage Options:
+ * 1. Exactly the same interface as localForage
+ * 2. With a currying function applied to the result
+ * 3. Modify the value returned (with or without curry)
+ * 4. Define error suppression
+ *
+ * @category forage
+ * @namespace forage
+ */
+var forage = {
+    /**
+     * @description get the object of a specific row if it exists.
+     * @
+     * @param {string} key
+     * @param {string} logger
+     * @param {number} returner
+     * @param {boolean} before
+     * @param {string} store
+     * @returns {Promise&lt;object|string|*>}
+     * @function getItem
+     * @memberof forage
+     */
+    getItem: function (_a) {
+        var _b = _a === void 0 ? {} : _a, key = _b.key, logger = _b.logger, returner = _b.returner, before = _b.before, store = _b.store;
+        return function (curry) {
+            return __awaiter(this, void 0, void 0, function () {
+                var storage, _a;
+                var _this = this;
+                return __generator(this, function (_b) {
+                    switch (_b.label) {
+                        case 0: return [4 /*yield*/, _defineStore({ store: store })];
+                        case 1:
+                            storage = _b.sent();
+                            if (!before) return [3 /*break*/, 3];
+                            return [4 /*yield*/, handler.maybeCurry(curry || null)(key)];
+                        case 2:
+                            _a = _b.sent();
+                            return [3 /*break*/, 4];
+                        case 3:
+                            _a = key;
+                            _b.label = 4;
+                        case 4:
+                            key = _a;
+                            return [2 /*return*/, handler.returner(storage.getItem(key).then(function (v) { return __awaiter(_this, void 0, void 0, function () {
+                                    return __generator(this, function (_a) {
+                                        return [2 /*return*/, !before ? handler.maybeCurry(curry || null)(v) : v];
+                                    });
+                                }); }).catch(function (err) {
+                                    /* istanbul ignore next */
+                                    return handler.logger(err)(logger);
+                                }))(returner)];
+                    }
+                });
+            });
+        };
+    },
+    /**
+     * @description get the value of a specific key in a row if it exists.
+     *
+     * @param {string} key
+     * @param {string} value
+     * @param {function} curry
+     * @param {string} logger
+     * @param {number|string} returner
+     * @returns {Promise&lt;object|string|*>}
+     * @function getKeyValue
+     * @memberof forage
+     */
+    getKeyValue: function (_a) {
+        var _b = _a === void 0 ? {} : _a, key = _b.key, value = _b.value, logger = _b.logger, returner = _b.returner, before = _b.before, store = _b.store;
+        return function (curry) {
+            return __awaiter(this, void 0, void 0, function () {
+                var storage, _a;
+                return __generator(this, function (_b) {
+                    switch (_b.label) {
+                        case 0: return [4 /*yield*/, _defineStore({ store: store })];
+                        case 1:
+                            storage = _b.sent();
+                            if (!before) return [3 /*break*/, 3];
+                            return [4 /*yield*/, handler.maybeCurry(curry || null)(value)];
+                        case 2:
+                            _a = _b.sent();
+                            return [3 /*break*/, 4];
+                        case 3:
+                            _a = value;
+                            _b.label = 4;
+                        case 4:
+                            value = _a;
+                            return [2 /*return*/, handler.returner(storage.getItem(key).then(function (v) {
+                                    // console.log(v)
+                                    return !before ? handler.maybeCurry(curry || null)(v[value]) : v[value];
+                                }).catch(function (err) {
+                                    /* istanbul ignore next */
+                                    return handler.logger(err)(logger);
+                                }))(returner)];
+                    }
+                });
+            });
+        };
+    },
+    /**
+     * @description set an row if it exists, completely overwrite it if
+     * it does not exist.
+     *
+     * @param {string} key
+     * @param {string} value
+     * @param {...Function|string|number} restArgs
+     * @param {function} restArgs.curry
+     * @param {string} restArgs.logger
+     * @param {number} restArgs.returner
+     * @returns {Promise&lt;object|string|*>}
+     * @function setItem
+     * @memberof forage
+     */
+    setItem: function (_a) {
+        var _b = _a === void 0 ? {} : _a, key = _b.key, value = _b.value, logger = _b.logger, returner = _b.returner, before = _b.before, store = _b.store;
+        return function (curry) {
+            return __awaiter(this, void 0, void 0, function () {
+                var storage, _a;
+                var _this = this;
+                return __generator(this, function (_b) {
+                    switch (_b.label) {
+                        case 0:
+                            storage = _defineStore({ store: store });
+                            if (!before) return [3 /*break*/, 2];
+                            return [4 /*yield*/, handler.maybeCurry(curry || null)(value)];
+                        case 1:
+                            _a = _b.sent();
+                            return [3 /*break*/, 3];
+                        case 2:
+                            _a = value;
+                            _b.label = 3;
+                        case 3:
+                            value = _a;
+                            return [2 /*return*/, handler.returner(storage.setItem(key, value).then(function (v) { return __awaiter(_this, void 0, void 0, function () {
+                                    return __generator(this, function (_a) {
+                                        return [2 /*return*/, !before ? handler.maybeCurry(curry || null)(v) : v];
+                                    });
+                                }); }).catch(function (err) {
+                                    /* istanbul ignore next */
+                                    return handler.logger(err)(logger);
+                                }))(returner)];
+                    }
+                });
+            });
+        };
+    },
+    /**
+     *
+     * @param {...Function|string|number} restArgs
+     * @param {number} restArgs.index
+     * @param {function} restArgs.curry
+     * @param {string} restArgs.logger
+     * @param {number} restArgs.returner
+     * @returns {Promise&lt;string>}
+     * @function setItem
+     * @memberof forage
+     */
+    key: function (_a) {
+        var _b = _a === void 0 ? {} : _a, index = _b.index, logger = _b.logger, returner = _b.returner, before = _b.before, store = _b.store;
+        return function (curry) {
+            return __awaiter(this, void 0, void 0, function () {
+                var storage, _a;
+                return __generator(this, function (_b) {
+                    switch (_b.label) {
+                        case 0: return [4 /*yield*/, _defineStore({ store: store })];
+                        case 1:
+                            storage = _b.sent();
+                            if (!before) return [3 /*break*/, 3];
+                            return [4 /*yield*/, handler.maybeCurry(curry || null)(index)];
+                        case 2:
+                            _a = _b.sent();
+                            return [3 /*break*/, 4];
+                        case 3:
+                            _a = index;
+                            _b.label = 4;
+                        case 4:
+                            index = _a;
+                            return [2 /*return*/, handler.returner(storage.key(index).then(function (v) {
+                                    return !before ? handler.maybeCurry(curry || null)(v) : v;
+                                }).catch(function (err) {
+                                    /* istanbul ignore next */
+                                    return handler.logger(err)(logger);
+                                }))(returner)];
+                    }
+                });
+            });
+        };
+    },
+    /**
+     * @description Merging data shouldn't be hard, so that logic is in here.
+     * There are so many ways to do it though, that the caller can define
+     * merge strategy. This is a "prebuilt" Curry.
+     *
+     * See https://ramdajs.com/docs/ for the exact features we are using.
+     *
+     * The default is to use the `deepWithKey` approach.
+     *
+     * @param {string} key
+     * @param {string|object|array} value
+     * @param {string} type
+     * @param {...Function|string|number} restArgs
+     * @param {function} restArgs.curry
+     * @param {string} restArgs.logger
+     * @param {number} restArgs.returner
+     * @returns {Promise&lt;object|string|*>}
+     * @function mergeItem
+     * @memberof forage
+     */
+    mergeItem: function (_a) {
+        var _b = _a === void 0 ? {} : _a, key = _b.key, value = _b.value, type = _b.type, returner = _b.returner, logger = _b.logger, before = _b.before, store = _b.store;
+        var concatValues = function (k, l, r) { return k === 'values' ? concat(l, r) : r; };
+        return function (curry) {
+            return __awaiter(this, void 0, void 0, function () {
+                var storage, _a, _b, _c;
+                var _this = this;
+                return __generator(this, function (_d) {
+                    switch (_d.label) {
+                        case 0:
+                            storage = _defineStore({ store: store });
+                            if (!before) return [3 /*break*/, 2];
+                            return [4 /*yield*/, handler.maybeCurry(curry || null)(value)];
+                        case 1:
+                            _a = _d.sent();
+                            return [3 /*break*/, 3];
+                        case 2:
+                            _a = value;
+                            _d.label = 3;
+                        case 3:
+                            value = _a;
+                            _c = (_b = handler).returner;
+                            return [4 /*yield*/, storage.getItem(key).then(function (v) { return __awaiter(_this, void 0, void 0, function () {
+                                    var val, _a, _b, _c, _d, err_1, err_2, err_3, err_4, err_5;
+                                    return __generator(this, function (_e) {
+                                        switch (_e.label) {
+                                            case 0:
+                                                _a = type;
+                                                switch (_a) {
+                                                    case 'custom': return [3 /*break*/, 1];
+                                                    case 'right': return [3 /*break*/, 5];
+                                                    case 'deepRight': return [3 /*break*/, 8];
+                                                    case 'with': return [3 /*break*/, 11];
+                                                    case 'withKey': return [3 /*break*/, 14];
+                                                    case 'deepWith': return [3 /*break*/, 15];
+                                                    case 'deepWithKey': return [3 /*break*/, 16];
+                                                }
+                                                return [3 /*break*/, 16];
+                                            case 1:
+                                                _e.trys.push([1, 4, , 5]);
+                                                _c = (_b = storage).setItem;
+                                                _d = [key];
+                                                return [4 /*yield*/, handler.maybeCurry(curry)(v)];
+                                            case 2: return [4 /*yield*/, _c.apply(_b, _d.concat([_e.sent()]))];
+                                            case 3:
+                                                val = _e.sent();
+                                                return [2 /*return*/, val];
+                                            case 4:
+                                                err_1 = _e.sent();
+                                                /* istanbul ignore next */
+                                                return [2 /*return*/, handler.logger(err_1)(logger)];
+                                            case 5:
+                                                _e.trys.push([5, 7, , 8]);
+                                                return [4 /*yield*/, storage.setItem(key, mergeRight(v, value))];
+                                            case 6:
+                                                val = _e.sent();
+                                                return [2 /*return*/, val];
+                                            case 7:
+                                                err_2 = _e.sent();
+                                                /* istanbul ignore next */
+                                                return [2 /*return*/, handler.logger(err_2)(logger)];
+                                            case 8:
+                                                _e.trys.push([8, 10, , 11]);
+                                                return [4 /*yield*/, storage.setItem(key, mergeDeepRight(v, value))];
+                                            case 9:
+                                                val = _e.sent();
+                                                return [2 /*return*/, val];
+                                            case 10:
+                                                err_3 = _e.sent();
+                                                /* istanbul ignore next */
+                                                return [2 /*return*/, handler.logger(err_3)(logger)];
+                                            case 11:
+                                                _e.trys.push([11, 13, , 14]);
+                                                return [4 /*yield*/, storage.setItem(key, mergeWith(concat, v, value))];
+                                            case 12:
+                                                val = _e.sent();
+                                                return [2 /*return*/, val];
+                                            case 13:
+                                                err_4 = _e.sent();
+                                                /* istanbul ignore next */
+                                                return [2 /*return*/, handler.logger(err_4)(logger)];
+                                            case 14:
+                                                try {
+                                                    return [2 /*return*/, storage.setItem(key, mergeWithKey(concatValues, v, value))];
+                                                }
+                                                catch (err) {
+                                                    /* istanbul ignore next */
+                                                    return [2 /*return*/, handler.logger(err)(logger)];
+                                                }
+                                                _e.label = 15;
+                                            case 15:
+                                                try {
+                                                    return [2 /*return*/, storage.setItem(key, mergeDeepWith(concat, v, value))];
+                                                }
+                                                catch (err) {
+                                                    /* istanbul ignore next */
+                                                    return [2 /*return*/, handler.logger(err)(logger)];
+                                                }
+                                                _e.label = 16;
+                                            case 16:
+                                                _e.trys.push([16, 18, , 19]);
+                                                return [4 /*yield*/, storage.setItem(key, mergeDeepWithKey(concatValues, v, value))];
+                                            case 17:
+                                                val = _e.sent();
+                                                return [2 /*return*/, val];
+                                            case 18:
+                                                err_5 = _e.sent();
+                                                /* istanbul ignore next */
+                                                return [2 /*return*/, handler.logger(err_5)(logger)];
+                                            case 19: return [2 /*return*/];
+                                        }
+                                    });
+                                }); }).catch(function (err) {
+                                    /* istanbul ignore next */
+                                    return handler.logger(err)(logger);
+                                })];
+                        case 4: return [2 /*return*/, _c.apply(_b, [_d.sent()])(returner)];
+                    }
+                });
+            });
+        };
+    },
+    removeItem: function (_a) {
+        var _b = _a === void 0 ? {} : _a, key = _b.key, logger = _b.logger, returner = _b.returner, before = _b.before, store = _b.store;
+        return function (curry) {
+            return __awaiter(this, void 0, void 0, function () {
+                var _a, storage, _b, _c;
+                return __generator(this, function (_d) {
+                    switch (_d.label) {
+                        case 0:
+                            if (!before) return [3 /*break*/, 2];
+                            return [4 /*yield*/, handler.maybeCurry(curry || null)(key)];
+                        case 1:
+                            _a = _d.sent();
+                            return [3 /*break*/, 3];
+                        case 2:
+                            _a = key;
+                            _d.label = 3;
+                        case 3:
+                            key = _a;
+                            return [4 /*yield*/, _defineStore({ store: store })];
+                        case 4:
+                            storage = _d.sent();
+                            _c = (_b = handler).returner;
+                            return [4 /*yield*/, storage.removeItem(key).then(function () {
+                                    return true; // !before ? handler.maybeCurry(curry || null)(true) : true
+                                }).catch(function (err) {
+                                    /* istanbul ignore next */
+                                    return handler.logger(err)(logger);
+                                })];
+                        case 5: return [2 /*return*/, _c.apply(_b, [_d.sent()])(returner)];
+                    }
+                });
+            });
+        };
+    },
+    deleteItemKey: function (key, value) {
+        var restArgs = [];
+        for (var _i = 2; _i &lt; arguments.length; _i++) {
+            restArgs[_i - 2] = arguments[_i];
+        }
+        return __awaiter(this, void 0, void 0, function () {
+            var args;
+            return __generator(this, function (_a) {
+                args = _mapArgs(restArgs);
+                return [2 /*return*/, localForage.getItem(key).then(function (val) {
+                        if (typeof value === 'string') {
+                            delete val[value];
+                        }
+                        else if (typeof value === typeof []) {
+                            value.forEach(function (v) { return delete val[v]; });
+                        }
+                        return localForage.setItem(key, val).then(function (val) {
+                            return val;
+                        }).catch(function (err) {
+                            /* istanbul ignore next */
+                            return handler.logger(err, args[0].logger);
+                        });
+                    }).catch(function (err) {
+                        /* istanbul ignore next */
+                        return handler.logger(err, args[0].logger);
+                    })];
+            });
+        });
+    },
+    clear: function (_a) {
+        var _b = _a === void 0 ? {} : _a, _c = _b.logger, logger = _c === void 0 ? 'none' : _c, store = _b.store;
+        return function (curry) {
+            return __awaiter(this, void 0, void 0, function () {
+                var storage;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0: return [4 /*yield*/, _defineStore({ store: store })];
+                        case 1:
+                            storage = _a.sent();
+                            return [2 /*return*/, storage.clear().then(function () {
+                                    return handler.maybeCurry(curry || null)(true);
+                                }).catch(function (err) {
+                                    /* istanbul ignore next */
+                                    return handler.logger(err)(logger);
+                                })];
+                    }
+                });
+            });
+        };
+    },
+    length: function (_a) {
+        var _b = _a === void 0 ? {} : _a, logger = _b.logger, returner = _b.returner, store = _b.store;
+        return function (curry) {
+            return __awaiter(this, void 0, void 0, function () {
+                var storage, _a, _b;
+                return __generator(this, function (_c) {
+                    switch (_c.label) {
+                        case 0: return [4 /*yield*/, _defineStore({ store: store })];
+                        case 1:
+                            storage = _c.sent();
+                            _b = (_a = handler).returner;
+                            return [4 /*yield*/, storage.length().then(function (v) {
+                                    return handler.maybeCurry(curry || null)(v);
+                                }).catch(function (err) {
+                                    /* istanbul ignore next */
+                                    return handler.logger(err)(logger);
+                                })];
+                        case 2: return [2 /*return*/, _b.apply(_a, [_c.sent()])(returner)];
+                    }
+                });
+            });
+        };
+    },
+    /**
+     * EXPERIMENTAL!!!
+     * @param {number} index
+     * @returns {Promise&lt;string>}
+     */
+    /*
+    keyCurry: async (curry, index) => { // must be a key
+      const future = async function res (curry) {
+        return handler.maybeCurry2(curry)(2) // broken state
+      }
+      return future()
+    },
+    */
+    keys: function (_a) {
+        var _b = _a === void 0 ? {} : _a, logger = _b.logger, returner = _b.returner, store = _b.store;
+        return function (curry) {
+            return __awaiter(this, void 0, void 0, function () {
+                var storage, _a, _b;
+                return __generator(this, function (_c) {
+                    switch (_c.label) {
+                        case 0: return [4 /*yield*/, _defineStore({ store: store })];
+                        case 1:
+                            storage = _c.sent();
+                            _b = (_a = handler).returner;
+                            return [4 /*yield*/, storage.keys().then(function (v) {
+                                    return handler.maybeCurry(curry || null)(v);
+                                }).catch(function (err) {
+                                    /* istanbul ignore next */
+                                    return handler.logger(err)(logger);
+                                })];
+                        case 2: return [2 /*return*/, _b.apply(_a, [_c.sent()])(returner)];
+                    }
+                });
+            });
+        };
+    },
+    hasKey: function (_a) {
+        var _b = _a === void 0 ? {} : _a, key = _b.key, logger = _b.logger, returner = _b.returner, store = _b.store;
+        return function (curry) {
+            return __awaiter(this, void 0, void 0, function () {
+                var storage, _a, _b;
+                return __generator(this, function (_c) {
+                    switch (_c.label) {
+                        case 0: return [4 /*yield*/, _defineStore({ store: store })];
+                        case 1:
+                            storage = _c.sent();
+                            _b = (_a = handler).returner;
+                            return [4 /*yield*/, storage.keys().then(function (k) {
+                                    return handler.maybeCurry(curry || null)(k.includes(key));
+                                }).catch(function (err) {
+                                    /* istanbul ignore next */
+                                    return handler.logger(err)(logger);
+                                })];
+                        case 2: return [2 /*return*/, _b.apply(_a, [_c.sent()])(returner)];
+                    }
+                });
+            });
+        };
+    },
+    // This version has destructuring and currying
+    // call it like:
+    //   forage.hasKey({ key: 'user4', closure: closureFn })
+    /*
+    hasKey_WORKS ({ key, curry, logger, returner }) { // must be a key
+      return localForage.keys().then(k => {
+        return handler.maybeCurry(curry)(k.includes(key))
+      }).catch(err => {
+        return handler.logger(err)(logger)
+      })
+    },
+    */
+    hasKeyValue: function (_a) {
+        var _b = _a === void 0 ? {} : _a, key = _b.key, value = _b.value, logger = _b.logger, returner = _b.returner;
+        return function (curry) {
+            return __awaiter(this, void 0, void 0, function () {
+                var _a, _b;
+                return __generator(this, function (_c) {
+                    switch (_c.label) {
+                        case 0:
+                            _b = (_a = handler).returner;
+                            return [4 /*yield*/, localForage.getItem(key).then(function (val) {
+                                    return handler.maybeCurry(curry)(!!val[value]);
+                                }).catch(function (err) {
+                                    /* istanbul ignore next */
+                                    return handler.logger(err)(logger);
+                                })];
+                        case 1: return [2 /*return*/, _b.apply(_a, [_c.sent()])(returner)];
+                    }
+                });
+            });
+        };
+    },
+    iterate: function (iteratorCallback, callback) {
+        localForage.iterate(iteratorCallback, callback);
+    },
+    // UTILS
+    /**
+     *
+     * @param {object} options
+     */
+    config: function (options) {
+        return localForage.config(options);
+    },
+    /**
+     * not async, not thenable
+     * don't use this. prefer to use config
+     * @returns {string}
+     */
+    driver: function () {
+        return localForage.driver();
+    },
+    ready: function () {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, localForage.ready()
+                        .then(function () { return true; })
+                        .catch(function (err) {
+                        /* istanbul ignore next */
+                        console.error(err);
+                        /* istanbul ignore next */
+                        return false;
+                    })];
+            });
+        });
+    },
+    /**
+     * This will return the entire object.
+     * If you just want to know if it worked, do this:
+     * ```
+     * const driver = !!forage.createInstance({ name: 'Test' })
+     * ```
+     * @param {string} name
+     * @returns {boolean}
+     */
+    createInstance: function (_a) {
+        var _b = _a === void 0 ? {} : _a, name = _b.name, logger = _b.logger;
+        // this should also register itself in a list of stores
+        return localForage.createInstance({
+            name: name || 'curriedForage'
+        }
+        // , (success: any, err: any) => {
+        //   /* istanbul ignore next */
+        //   return err ? handler.logger(err, logger) : success
+        // }
+        );
+    },
+    // todo: when purging data, this will be important.
+    dropInstance: function (_a) {
+        var name = _a.name;
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_b) {
+                return [2 /*return*/, localForage.dropInstance({ name: name }).then(function () {
+                        return true;
+                    }).catch(function (err) {
+                        /* istanbul ignore next */
+                        console.log(err);
+                        /* istanbul ignore next */
+                        return false;
+                    })];
+            });
+        });
+    },
+    dropAll: function () {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, localForage.dropInstance({}).then(function () {
+                        return true;
+                    }).catch(function (err) {
+                        /* istanbul ignore next */
+                        console.log(err);
+                        /* istanbul ignore next */
+                        return false;
+                    })];
+            });
+        });
+    },
+    dropStore: function (_a) {
+        var name = _a.name, storeName = _a.storeName;
+        return localForage.dropInstance({
+            name: name,
+            storeName: storeName
+        });
+    }
+};
+/**
+ * @name _mapArgs
+ * @description Internal function for mapping the args to be
+ * passed to the forage functions. We don't care about order,
+ * we just care about type. And speed.
+ *
+ * In fact, we care so much about speed, we will probably
+ * deprecate this. :D
+ *
+ * @category curriedForage
+ * @param {Array} arr
+ * @returns {Array}
+ * @private
+ */
+var _mapArgs = function (arr) {
+    if (arr) {
+        var arrint = arr.map(function (val) {
+            var type = typeof val;
+            switch (type) {
+                case 'function':
+                    return { curry: val }; // function to curry with
+                case 'string':
+                    return { logger: val }; // name of logger to use
+                case 'number':
+                    return { returner: val }; // type of return
+                case 'boolean':
+                    return { before: val }; // curry before forage if true
+                default:
+                    return { curry: val };
+            }
+        });
+        return arrint;
+    }
+    else
+        return [];
+};
+var _defineStore = function (_a) {
+    var store = (_a === void 0 ? {} : _a).store;
+    if (!store)
+        return localForage;
+    return forage.createInstance({
+        name: store
+    });
+};
+// we are exporting the internals for testing purposes
+var internals = { _mapArgs: _mapArgs, _defineStore: _defineStore };
+var getItem = forage.getItem;
+var getKeyValue = forage.getKeyValue;
+var setItem = forage.setItem;
+var key = forage.key;
+var mergeItem = forage.mergeItem;
+var removeItem = forage.removeItem;
+var deleteItemKey = forage.removeItem;
+var clear = forage.clear;
+var length = forage.length;
+var keys = forage.keys;
+var hasKey = forage.hasKey;
+var hasKeyValue = forage.hasKeyValue;
+var ready = forage.ready;
+var defineStore = _defineStore;
+
+export { clear, defineStore, deleteItemKey, forage, getItem, getKeyValue, hasKey, hasKeyValue, internals, key, keys, length, mergeItem, ready, removeItem, setItem };
+//# sourceMappingURL=curriedForage.esm.js.map
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<footer class="footer">
+    <div class="content has-text-centered">
+        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a></p>
+        <p class="sidebar-created-by">
+            <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
+            <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+        </p>
+    </div>
+</footer>
+
+
+<script src="scripts/app.min.js"></script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

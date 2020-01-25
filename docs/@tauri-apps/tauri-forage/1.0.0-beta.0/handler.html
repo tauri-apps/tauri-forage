@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>JSDoc: cryptoForage</title>
+    <title>JSDoc: handler</title>
 
     <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -27,7 +27,7 @@
                 <div class="navbar-brand">
                     
                      
-                        <h1 class="navbar-item">curriedForage Documentation</h1>
+                        <h1 class="navbar-item">tauri-forage Documentation</h1>
                     
                     <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
                         <span aria-hidden="true"></span>
@@ -52,7 +52,7 @@
                 <div class="content" id="main-content-wrapper">
                     <header class="page-title">
                         <p>Namespace</p>
-                        <h1>cryptoForage</h1>
+                        <h1>handler</h1>
                     </header>
                     
                     
@@ -64,7 +64,7 @@
 
 <header>
     
-        <h2>cryptoForage</h2>
+        <h2>handler</h2>
         
     
 </header>
@@ -73,7 +73,7 @@
     <div class="container-overview">
     
         
-            <div class="description"><script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>Use currying process to inject</p></div>
+            <div class="description"><script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script></div>
         
 
         
@@ -112,9 +112,9 @@
 
     
         <p class="tag-source">
-            <a href="cryptoForage.js.html" class="button">View Source</a>
+            <a href="handler.esm.js.html" class="button">View Source</a>
             <span>
-                <a href="cryptoForage.js.html">cryptoForage.js</a>, <a href="cryptoForage.js.html#line11">line 11</a>
+                <a href="handler.esm.js.html">handler.esm.js</a>, <a href="handler.esm.js.html#line4">line 4</a>
             </span>
         </p>
     
@@ -148,8 +148,8 @@
 
 
     
-    <h4 class="name" id=".deBox">
-        <a class="href-link" href="#.deBox">#</a>
+    <h4 class="name" id=".jsonPurify">
+        <a class="href-link" href="#.jsonPurify">#</a>
         
             
                 <span class='tag'>static</span>
@@ -157,7 +157,7 @@
         
         <span class="code-name">
             
-                deBox<span class="signature">(key, model, maxlen, row, name, logger, returner)</span><span class="type-signature"> &rarr; {object|*}</span>
+                jsonPurify<span class="signature">(model, maxLen)</span><span class="type-signature"></span>
             
         </span>
     </h4>
@@ -166,7 +166,7 @@
     
     
     <div class="description">
-        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>use the &quot;box&quot; system to decrypt something from the storage</p>
+        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>accepts an array and tries to parse the object passed</p>
     </div>
     
 
@@ -204,38 +204,13 @@
         
 <tr class="deep-level-0">
   
-      <td class="name"><code>key</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">string</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"><p>encryption key</p></td>
-</tr>
-
-
-    
-
-        
-<tr class="deep-level-0">
-  
       <td class="name"><code>model</code></td>
   
 
   <td class="type">
   
       
-<span class="param-type">array</span>
+<span class="param-type">object</span>
 
 
   
@@ -245,7 +220,7 @@
 
   
 
-  <td class="description last"><p>array of acceptable properties (validate)</p></td>
+  <td class="description last"><p>the model to map against</p></td>
 </tr>
 
 
@@ -254,107 +229,7 @@
         
 <tr class="deep-level-0">
   
-      <td class="name"><code>maxlen</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">string</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"><p>forage name of key (validate)</p></td>
-</tr>
-
-
-    
-
-        
-<tr class="deep-level-0">
-  
-      <td class="name"><code>row</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">string</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"><p>forage row (forage)</p></td>
-</tr>
-
-
-    
-
-        
-<tr class="deep-level-0">
-  
-      <td class="name"><code>name</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">string</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"><p>forage name of key (forage)</p></td>
-</tr>
-
-
-    
-
-        
-<tr class="deep-level-0">
-  
-      <td class="name"><code>logger</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">string</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"><p>loglevel of errors (forage)</p></td>
-</tr>
-
-
-    
-
-        
-<tr class="deep-level-0">
-  
-      <td class="name"><code>returner</code></td>
+      <td class="name"><code>maxLen</code></td>
   
 
   <td class="type">
@@ -370,7 +245,7 @@
 
   
 
-  <td class="description last"><p>return type (forage)</p></td>
+  <td class="description last"><p>max length of model</p></td>
 </tr>
 
 
@@ -415,9 +290,9 @@
 
     
         <p class="tag-source">
-            <a href="cryptoForage.js.html" class="button">View Source</a>
+            <a href="handler.esm.js.html" class="button">View Source</a>
             <span>
-                <a href="cryptoForage.js.html">cryptoForage.js</a>, <a href="cryptoForage.js.html#line45">line 45</a>
+                <a href="handler.esm.js.html">handler.esm.js</a>, <a href="handler.esm.js.html#line195">line 195</a>
             </span>
         </p>
     
@@ -440,51 +315,7 @@
 
 
 
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
 
-<div class="columns">
-    
-    <div class='param-desc column is-7'><ul>
-<li>the JSON results of our box</li>
-</ul></div>
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
-        
-<span class="param-type">object</span>
-|
-
-<span class="param-type">*</span>
-
-
-    </div>
-    
-</div>
-
-                
-        </div>
-    </div>
-
-
-
-
-    <h5>Example</h5>
-    
-    
-        <pre class="prettyprint"><code>const curry = async function (val) {
-   const box = await crypto.secretBox.encrypt({
-     json: val,
-     key: key
-   })
-   console.log(box)
-   return box
- }</code></pre>
-    
 
 
 </div>
@@ -493,8 +324,8 @@
 
 
     
-    <h4 class="name" id=".enBox">
-        <a class="href-link" href="#.enBox">#</a>
+    <h4 class="name" id=".logger">
+        <a class="href-link" href="#.logger">#</a>
         
             
                 <span class='tag'>static</span>
@@ -502,7 +333,7 @@
         
         <span class="code-name">
             
-                enBox<span class="signature">(key, logger, returner)</span><span class="type-signature"> &rarr; {object|*}</span>
+                logger<span class="signature">(msg, type)</span><span class="type-signature"> &rarr; {*}</span>
             
         </span>
     </h4>
@@ -511,7 +342,7 @@
     
     
     <div class="description">
-        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>encrypt a functional</p>
+        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>Set logging type for returning errors in a number of ways.</p>
     </div>
     
 
@@ -549,13 +380,13 @@
         
 <tr class="deep-level-0">
   
-      <td class="name"><code>key</code></td>
+      <td class="name"><code>msg</code></td>
   
 
   <td class="type">
   
       
-<span class="param-type">string</span>
+<span class="param-type">*</span>
 
 
   
@@ -565,7 +396,7 @@
 
   
 
-  <td class="description last"><p>encryption key</p></td>
+  <td class="description last"></td>
 </tr>
 
 
@@ -574,13 +405,13 @@
         
 <tr class="deep-level-0">
   
-      <td class="name"><code>logger</code></td>
+      <td class="name"><code>type</code></td>
   
 
   <td class="type">
   
       
-<span class="param-type">array</span>
+<span class="param-type">MaybeLoggerType</span>
 
 
   
@@ -590,32 +421,7 @@
 
   
 
-  <td class="description last"><p>loglevel of errors (forage)</p></td>
-</tr>
-
-
-    
-
-        
-<tr class="deep-level-0">
-  
-      <td class="name"><code>returner</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">array</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"><p>return type (forage)</p></td>
+  <td class="description last"></td>
 </tr>
 
 
@@ -660,9 +466,232 @@
 
     
         <p class="tag-source">
-            <a href="cryptoForage.js.html" class="button">View Source</a>
+            <a href="handler.esm.js.html" class="button">View Source</a>
             <span>
-                <a href="cryptoForage.js.html">cryptoForage.js</a>, <a href="cryptoForage.js.html#line12">line 12</a>
+                <a href="handler.esm.js.html">handler.esm.js</a>, <a href="handler.esm.js.html#line93">line 93</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Throws:</label></div>
+        <div class="column is-10">
+            
+                    
+<div class="columns">
+    
+    <div class='param-desc column is-7'><ul>
+<li>just the message it is passed</li>
+</ul></div>
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+<span class="param-type">Error</span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">*</span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id=".maybeCurry">
+        <a class="href-link" href="#.maybeCurry">#</a>
+        
+            
+                <span class='tag'>static</span>
+            
+        
+        <span class="code-name">
+            
+                maybeCurry<span class="signature">(fn, val)</span><span class="type-signature"> &rarr; {*}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>If a function is passed, apply it to the value.
+Otherwise, just return the value.</p>
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>fn</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">function</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>val</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">*</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="handler.esm.js.html" class="button">View Source</a>
+            <span>
+                <a href="handler.esm.js.html">handler.esm.js</a>, <a href="handler.esm.js.html#line167">line 167</a>
             </span>
         </p>
     
@@ -693,17 +722,10 @@
 
 <div class="columns">
     
-    <div class='param-desc column is-7'><ul>
-<li>the JSON results of our box</li>
-</ul></div>
-    
     
     <div class='column is-5 has-text-left'>
         <label>Type: </label>
         
-<span class="param-type">object</span>
-|
-
 <span class="param-type">*</span>
 
 
@@ -718,15 +740,237 @@
 
 
 
-    <h5>Example</h5>
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id=".returner">
+        <a class="href-link" href="#.returner">#</a>
+        
+            
+                <span class='tag'>static</span>
+            
+        
+        <span class="code-name">
+            
+                returner<span class="signature">(val, type)</span><span class="type-signature"> &rarr; {*}</span>
+            
+        </span>
+    </h4>
+    
+
     
     
-        <pre class="prettyprint"><code>const boxFn = await cryptoForage.enBox({
-   key:key,
-   loggerType: 'throw',
-   returnType: 7
- })(new Date().now())</code></pre>
+    <div class="description">
+        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>Return the value - or don't.
+Of special note is case 4, which will tell you if the
+result of the operation is true, false, null or undefined.
+You can use numbers or strings</p>
+<h2>TYPES</h2>
+<ul>
+<li>1(quiet) - return void 0</li>
+<li>2(console) - log the returned value to the console</li>
+<li>3(break) - throw an error with the contents of the return</li>
+<li>4(truthy) - return a true or false value</li>
+<li>5(typeof) - return type of response</li>
+<li>6(trace) - get a console.trace() of the call stack</li>
+<li>7(passthrough) - the default does nothing to the return</li>
+</ul>
+    </div>
     
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>val</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">*</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>type</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">MaybeReturnerType</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="handler.esm.js.html" class="button">View Source</a>
+            <span>
+                <a href="handler.esm.js.html">handler.esm.js</a>, <a href="handler.esm.js.html#line9">line 9</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Throws:</label></div>
+        <div class="column is-10">
+            
+                    
+<div class="columns">
+    
+    <div class='param-desc column is-7'><p>the message it is passed (if type 3)</p></div>
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+<span class="param-type">Error</span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">*</span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
 
 
 </div>

@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>JSDoc: secretBox</title>
+    <title>JSDoc: cryptoForage</title>
 
     <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -27,7 +27,7 @@
                 <div class="navbar-brand">
                     
                      
-                        <h1 class="navbar-item">curriedForage Documentation</h1>
+                        <h1 class="navbar-item">tauri-forage Documentation</h1>
                     
                     <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
                         <span aria-hidden="true"></span>
@@ -52,7 +52,7 @@
                 <div class="content" id="main-content-wrapper">
                     <header class="page-title">
                         <p>Namespace</p>
-                        <h1>secretBox</h1>
+                        <h1>cryptoForage</h1>
                     </header>
                     
                     
@@ -64,8 +64,7 @@
 
 <header>
     
-        <h2>
-            <span class="ancestors"><a href="crypto.html">crypto</a>.</span>secretBox</h2>
+        <h2>cryptoForage</h2>
         
     
 </header>
@@ -74,7 +73,7 @@
     <div class="container-overview">
     
         
-            <div class="description"><script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>Make a public key / private key box</p></div>
+            <div class="description"><script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>Use currying process to inject</p></div>
         
 
         
@@ -113,27 +112,14 @@
 
     
         <p class="tag-source">
-            <a href="cryptoPrimitives.js.html" class="button">View Source</a>
+            <a href="cryptoForage.esm.js.html" class="button">View Source</a>
             <span>
-                <a href="cryptoPrimitives.js.html">cryptoPrimitives.js</a>, <a href="cryptoPrimitives.js.html#line41">line 41</a>
+                <a href="cryptoForage.esm.js.html">cryptoForage.esm.js</a>, <a href="cryptoForage.esm.js.html#line12">line 12</a>
             </span>
         </p>
     
 </dl>
 
-
-        
-            <h3>Example</h3>
-            
-    
-        <pre class="prettyprint"><code>```
- const key = generateKey()
- const obj = { "hello": "world" }
- const encrypted = crypto.nacl.secretBox.encrypt(obj, key)
- const decrypted = crypto.nacl.secretBox.decrypt(encrypted, key)
- console.log(decrypted, obj) // should be shallow equal
-```</code></pre>
-    
 
         
     
@@ -162,8 +148,8 @@
 
 
     
-    <h4 class="name" id=".decrypt">
-        <a class="href-link" href="#.decrypt">#</a>
+    <h4 class="name" id=".deBox">
+        <a class="href-link" href="#.deBox">#</a>
         
             
                 <span class='tag'>static</span>
@@ -171,7 +157,7 @@
         
         <span class="code-name">
             
-                decrypt<span class="signature">(msg, key)</span><span class="type-signature"> &rarr; {object}</span>
+                deBox<span class="signature">(key, model, maxlen, row, name, logger, returner)</span><span class="type-signature"> &rarr; {object|*}</span>
             
         </span>
     </h4>
@@ -180,7 +166,7 @@
     
     
     <div class="description">
-        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script>
+        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>use the &quot;box&quot; system to decrypt something from the storage</p>
     </div>
     
 
@@ -218,31 +204,6 @@
         
 <tr class="deep-level-0">
   
-      <td class="name"><code>msg</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">string</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-
-    
-
-        
-<tr class="deep-level-0">
-  
       <td class="name"><code>key</code></td>
   
 
@@ -259,7 +220,157 @@
 
   
 
-  <td class="description last"></td>
+  <td class="description last"><p>encryption key</p></td>
+</tr>
+
+
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>model</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">array</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>array of acceptable properties (validate)</p></td>
+</tr>
+
+
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>maxlen</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">string</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>forage name of key (validate)</p></td>
+</tr>
+
+
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>row</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">string</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>forage row (forage)</p></td>
+</tr>
+
+
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>name</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">string</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>forage name of key (forage)</p></td>
+</tr>
+
+
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>logger</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">string</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>loglevel of errors (forage)</p></td>
+</tr>
+
+
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>returner</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">number</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>return type (forage)</p></td>
 </tr>
 
 
@@ -304,9 +415,9 @@
 
     
         <p class="tag-source">
-            <a href="cryptoPrimitives.js.html" class="button">View Source</a>
+            <a href="cryptoForage.esm.js.html" class="button">View Source</a>
             <span>
-                <a href="cryptoPrimitives.js.html">cryptoPrimitives.js</a>, <a href="cryptoPrimitives.js.html#line118">line 118</a>
+                <a href="cryptoForage.esm.js.html">cryptoForage.esm.js</a>, <a href="cryptoForage.esm.js.html#line55">line 55</a>
             </span>
         </p>
     
@@ -327,44 +438,28 @@
 
 
 
+
+
     <div class='columns method-parameter'>
-        <div class="column is-2"><label>Throws:</label></div>
+        <div class="column is-2"><label>Returns:</label></div>
         <div class="column is-10">
             
                     
+
 <div class="columns">
     
     <div class='param-desc column is-7'><ul>
-<li>Could not decrypt message</li>
+<li>the JSON results of our box</li>
 </ul></div>
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
-<span class="param-type">error</span>
-
-
-    </div>
-    
-</div>
-
-                
-        </div>
-    </div>
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
     
     
     <div class='column is-5 has-text-left'>
         <label>Type: </label>
         
 <span class="param-type">object</span>
+|
+
+<span class="param-type">*</span>
 
 
     </div>
@@ -376,6 +471,13 @@
     </div>
 
 
+
+
+    <h5>Example</h5>
+    
+    
+        <pre class="prettyprint"><code>const curry = async function (val) {   const box = await crypto.secretBox.encrypt({     json: val,     key: key   })   console.log(box)   return box }</code></pre>
+    
 
 
 </div>
@@ -384,8 +486,8 @@
 
 
     
-    <h4 class="name" id=".encrypt">
-        <a class="href-link" href="#.encrypt">#</a>
+    <h4 class="name" id=".enBox">
+        <a class="href-link" href="#.enBox">#</a>
         
             
                 <span class='tag'>static</span>
@@ -393,7 +495,7 @@
         
         <span class="code-name">
             
-                encrypt<span class="signature">(json, key)</span><span class="type-signature"> &rarr; {string}</span>
+                enBox<span class="signature">(key, logger, returner)</span><span class="type-signature"> &rarr; {object|*}</span>
             
         </span>
     </h4>
@@ -402,7 +504,7 @@
     
     
     <div class="description">
-        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script>
+        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>encrypt a functional</p>
     </div>
     
 
@@ -435,31 +537,6 @@
     </thead>
 
     <tbody>
-    
-
-        
-<tr class="deep-level-0">
-  
-      <td class="name"><code>json</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">object</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-
     
 
         
@@ -481,7 +558,57 @@
 
   
 
-  <td class="description last"></td>
+  <td class="description last"><p>encryption key</p></td>
+</tr>
+
+
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>logger</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">array</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>loglevel of errors (forage)</p></td>
+</tr>
+
+
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>returner</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">array</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>return type (forage)</p></td>
 </tr>
 
 
@@ -526,9 +653,9 @@
 
     
         <p class="tag-source">
-            <a href="cryptoPrimitives.js.html" class="button">View Source</a>
+            <a href="cryptoForage.esm.js.html" class="button">View Source</a>
             <span>
-                <a href="cryptoPrimitives.js.html">cryptoPrimitives.js</a>, <a href="cryptoPrimitives.js.html#line68">line 68</a>
+                <a href="cryptoForage.esm.js.html">cryptoForage.esm.js</a>, <a href="cryptoForage.esm.js.html#line13">line 13</a>
             </span>
         </p>
     
@@ -548,28 +675,6 @@
 
 
 
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Throws:</label></div>
-        <div class="column is-10">
-            
-                    
-<div class="columns">
-    
-        
-            <div class='column is-12 has-text-left'>
-            <label>Type: </label>
-<span class="param-type">Error</span>
-
-
-            </div>
-        
-    
-</div>
-
-                
-        </div>
-    </div>
 
 
 
@@ -581,11 +686,18 @@
 
 <div class="columns">
     
+    <div class='param-desc column is-7'><ul>
+<li>the JSON results of our box</li>
+</ul></div>
+    
     
     <div class='column is-5 has-text-left'>
         <label>Type: </label>
         
-<span class="param-type">string</span>
+<span class="param-type">object</span>
+|
+
+<span class="param-type">*</span>
 
 
     </div>
@@ -599,155 +711,11 @@
 
 
 
-</div>
-            
-                <div class="member">
-
-
-    
-    <h4 class="name" id=".keyGen">
-        <a class="href-link" href="#.keyGen">#</a>
-        
-            
-                <span class='tag'>static</span>
-            
-        
-        <span class="code-name">
-            
-                keyGen<span class="signature">(input)</span><span class="type-signature"></span>
-            
-        </span>
-    </h4>
-    
-
+    <h5>Example</h5>
     
     
-    <div class="description">
-        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script>
-    </div>
+        <pre class="prettyprint"><code>const boxFn = await cryptoForage.enBox({   key:key,   loggerType: 'throw',   returnType: 7 })(new Date().now())</code></pre>
     
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        
-<tr class="deep-level-0">
-  
-      <td class="name"><code>input</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">*</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="cryptoPrimitives.js.html" class="button">View Source</a>
-            <span>
-                <a href="cryptoPrimitives.js.html">cryptoPrimitives.js</a>, <a href="cryptoPrimitives.js.html#line57">line 57</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 </div>

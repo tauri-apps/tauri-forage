@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>JSDoc: Home</title>
+
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="./build/entry.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link href="https://fonts.googleapis.com/css?family=Muli:100,400,700|Oswald:300|Inconsolata,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+</head>
+
+<body>
+    <div id="stickyNavbarOverlay"></div>
+    <div class="top-navbar">
+        <div class="container">
+            <nav class="navbar" role="navigation" aria-label="main navigation">
+                <div class="navbar-brand">
+                    
+                     
+                        <h1 class="navbar-item">tauri-forage Documentation</h1>
+                    
+                    <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </a>
+                </div>
+                
+            </nav>
+        </div>
+    </div>
+    <div class="container">
+        <div class="columns">
+            <div class="column is-3" id="sidebarNav">
+                <div class="sidebar">
+                    <nav>
+                        <h2><a href="index.html">Home</a></h2><div class="category"></div><div class="category"><h2>crypto</h2><h3>Namespaces</h3><ul><li><a href="crypto.html">crypto</a></li><li><a href="crypto.box.html">box</a></li><li><a href="crypto.secretBox.html">secretBox</a></li></ul></div><div class="category"><h2>forage</h2><h3>Namespaces</h3><ul><li><a href="cryptoForage.html">cryptoForage</a></li><li><a href="forage.html">forage</a></li></ul></div><div class="category"><h2>handler</h2><h3>Namespaces</h3><ul><li><a href="handler.html">handler</a></li></ul></div>
+                    </nav>
+                </div>
+            </div>
+            <div class="column is-9-desktop">
+                <div class="content" id="main-content-wrapper">
+                    <header class="page-title">
+                        <p>Title</p>
+                        <h1>Home</h1>
+                    </header>
+                    
+                    
+
+
+
+    
+
+
+    <h3>@tauri-apps/tauri-forage 1.0.0-beta.0</h3>
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+    <section>
+        <article><h1>tauri forage</h1>
+<p><img src="https://github.com/tauri-apps/tauri-forage/workflows/test%20library/badge.svg?branch=dev" alt="test library">
+<img src="https://img.shields.io/npm/v/@tauri-apps/tauri-forage.svg" alt="npm version"></p>
+<p><a href="https://localforage.github.io/localForage/">localForage</a> is a great way to make sure that you've got the most persistent localStorage available on the device and webview that you are using, but operations (like replacing a keyValue) can be tedious, and our approach of multi-op currying makes it very flexible. It is written and tested in typescript, and ships with commonjs and an ejs versions - as well as all of its own typings in case you are using typescript.</p>
+<p>If you don't know how localForage works, you would do well to check out those docs - because that is the underlying engine that this library uses. But for a refresher, localForage uses IndexedDB, WebSQL, or localStorage - depending on the best engine that the browser offers.</p>
+<h2>Installation</h2>
+<p>Install with your package manager</p>
+<pre class="prettyprint source"><code>yarn add @tauri-apps/tauri-forage
+</code></pre>
+<p>Import into your JS / TS</p>
+<pre class="prettyprint source"><code>import { forage } from '@tauri-apps/tauri-forage'
+</code></pre>
+<p>Use it:</p>
+<pre class="prettyprint source"><code>forage.setItem({
+  key: 'yourKey',
+  value: 'a value'
+})()
+</code></pre>
+<h2>How does it work?</h2>
+<p>Here is the <code>getItem</code> function. There is a lot to discuss, and once you've understood the principle all of the other functions will make sense to you. If you want to see more details, check out the tests in <code>test/__tests__/curriedForage.spec.ts</code></p>
+<pre class="prettyprint source lang-ts"><code>getItem ({ key, logger, returner, before, store }: BeforeItem = {}) {
+  return async function (curry?: MaybeFunction) {
+    const storage = await _defineStore({ store: store })
+    key = before ? await handler.maybeCurry(curry || null)(key) : key
+    return handler.returner(
+      storage.getItem(key).then(async (v: any) => {
+        return !before ? handler.maybeCurry(curry || null)(v) : v
+      }).catch((err: any) => {
+        /* istanbul ignore next */
+        return handler.logger(err, logger)
+      })
+    )(returner)
+  }
+}
+</code></pre>
+<p>In its most simple incarnation, you can just get the keyValue of the keyName.</p>
+<pre class="prettyprint source"><code></code></pre>
+<h3>Returner</h3>
+<p>You can instruct every function to return the value in specific ways.</p>
+<h4>TYPES</h4>
+<ul>
+<li>1(quiet) - return void 0</li>
+<li>2(console) - log the returned value to the console</li>
+<li>3(break) - throw an error with the contents of the return</li>
+<li>4(truthy) - return a true or false value</li>
+<li>5(typeof) - return type of response</li>
+<li>6(trace) - get a console.trace() of the call stack</li>
+<li>7(passthrough) - the default does nothing to the return</li>
+</ul>
+<h3>Logger</h3>
+<p>If an error occurs, you can determine how to respond:</p>
+<h4>TYPES</h4>
+<ul>
+<li>1(none) - just return</li>
+<li>2(string) - returned the string value of the error</li>
+<li>3(trace) - try to return a stack trace up to the error</li>
+<li>4(console) - write a console.error</li>
+<li>5(throw) - throw the error</li>
+<li>6(default) - return undefined</li>
+</ul>
+<blockquote>
+<p>If you want, you can also use these handler functions yourself! They are properly exported and typed!</p>
+</blockquote>
+<h3>Currying</h3>
+<p>However you can also curry the returned value with a function you can pass into the function call.</p>
+<p>Let's look at a few tests to see how currying can be applied:</p>
+<pre class="prettyprint source lang-ts"><code>it('will curry after', async () => {
+
+  await forage.setItem({
+    key: 'user',
+    value: { name: 'Alice' }
+  } as any)()
+
+  const curry = (v: any) => v.toUpperCase()
+
+  const user = await forage.getKeyValue({
+    key: 'user',
+    value: 'name'
+  } as any)(curry)
+
+  expect(user).toStrictEqual('ALICE')
+})
+</code></pre>
+<p>You can also curry the value BEFORE it is used by localForage. This example is obviously quite trivial, but you may start to see a pattern emerge.</p>
+<pre class="prettyprint source lang-ts"><code>  it('will curry before', async () => {
+
+    // you can set objects or arrays or even huge base64 strings for values
+    await forage.setItem({
+      key: 'user',
+      value: {
+        name: 'Alice'
+      }
+    }  as any)()
+
+    const curry = (v: any) => v.toLowerCase()
+
+    const user = await forage.getKeyValue({
+      key: 'user',
+      value: 'NAME',
+      before: true
+    } as any)(curry)
+
+    expect(user).toStrictEqual('Alice')
+  })
+</code></pre>
+<p>If you want to have multiple &quot;stores&quot;, you can easily do that too.</p>
+<h2>Extensions to localForage</h2>
+<p>Of note are the extensions to the generic interface:</p>
+<ul>
+<li>mergeItem (with a number of merge strategies available)</li>
+<li>getKeyValue</li>
+<li>deleteItemKey</li>
+<li>hasKey</li>
+<li>hasKeyValue</li>
+</ul>
+<h2>undefined / void 0 =&gt; always returns null!</h2>
+<blockquote>
+<p>Even if undefined is saved, null will be returned by getItem().
+This is due to a limitation in localStorage, and for compatibility
+reasons localForage cannot store the value undefined.</p>
+</blockquote>
+<h1>Development</h1>
+<h2>Testing</h2>
+<p>Tests are written with Jasmine flavor using Jest.</p>
+<h2>Docs</h2>
+<p>The docs are available as a static site in /docs</p>
+<h2>License</h2>
+<p>(c) 2019-2020 - Daniel Thompson-Yvetot and contributors</p>
+<p>MIT</p></article>
+    </section>
+
+
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<footer class="footer">
+    <div class="content has-text-centered">
+        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a></p>
+        <p class="sidebar-created-by">
+            <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
+            <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+        </p>
+    </div>
+</footer>
+
+
+<script src="scripts/app.min.js"></script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

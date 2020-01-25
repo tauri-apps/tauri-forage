@@ -1,0 +1,320 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>JSDoc: cryptoPrimitives.esm.js</title>
+
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="./build/entry.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link href="https://fonts.googleapis.com/css?family=Muli:100,400,700|Oswald:300|Inconsolata,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+</head>
+
+<body>
+    <div id="stickyNavbarOverlay"></div>
+    <div class="top-navbar">
+        <div class="container">
+            <nav class="navbar" role="navigation" aria-label="main navigation">
+                <div class="navbar-brand">
+                    
+                     
+                        <h1 class="navbar-item">tauri-forage Documentation</h1>
+                    
+                    <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </a>
+                </div>
+                
+            </nav>
+        </div>
+    </div>
+    <div class="container">
+        <div class="columns">
+            <div class="column is-3" id="sidebarNav">
+                <div class="sidebar">
+                    <nav>
+                        <h2><a href="index.html">Home</a></h2><div class="category"></div><div class="category"><h2>crypto</h2><h3>Namespaces</h3><ul><li><a href="crypto.html">crypto</a></li><li><a href="crypto.box.html">box</a></li><li><a href="crypto.secretBox.html">secretBox</a></li></ul></div><div class="category"><h2>forage</h2><h3>Namespaces</h3><ul><li><a href="cryptoForage.html">cryptoForage</a></li><li><a href="forage.html">forage</a></li></ul></div><div class="category"><h2>handler</h2><h3>Namespaces</h3><ul><li><a href="handler.html">handler</a></li></ul></div>
+                    </nav>
+                </div>
+            </div>
+            <div class="column is-9-desktop">
+                <div class="content" id="main-content-wrapper">
+                    <header class="page-title">
+                        <p>Source</p>
+                        <h1>cryptoPrimitives.esm.js</h1>
+                    </header>
+                    
+                    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { _ as __awaiter, a as __generator } from './_tslib-ca2dd4fc.js';
+import { secretbox, randomBytes, hash, box } from 'tweetnacl';
+import { encodeBase64, decodeUTF8, decodeBase64, encodeUTF8 } from 'tweetnacl-util';
+
+// just a helper for a constant :)
+var keyLength = secretbox.keyLength;
+// todo: https://github.com/dchest/tweetnacl-js/wiki/Using-with-Webpack
+/**
+ * @category crypto
+ * @namespace
+ */
+var crypto = {
+    /**
+     * @name nonce
+     * @category crypto
+     * @memberof crypto
+     * @returns {object}
+     * @function
+     */
+    nonce: function () {
+        return randomBytes(secretbox.nonceLength);
+    },
+    /**
+     * @name hash
+     * @category crypto
+     * @memberof crypto
+     * @param {*} input
+     * @returns {string}
+     * @function
+     */
+    hash: function (input) {
+        return encodeBase64(hash(decodeUTF8(input))).slice(0, 44);
+    },
+    /**
+     * @name secretBox
+     * @category crypto
+     * @description Make a public key / private key box
+     * @namespace
+     * @memberof crypto
+     * @example
+     * ```
+     *  const key = generateKey()
+     *  const obj = { "hello": "world" }
+     *  const encrypted = crypto.nacl.secretBox.encrypt(obj, key)
+     *  const decrypted = crypto.nacl.secretBox.decrypt(encrypted, key)
+     *  console.log(decrypted, obj) // should be shallow equal
+     * ```
+     */
+    secretBox: {
+        /**
+         * @name keyGen
+         * @category crypto
+         * @memberof crypto.secretBox
+         * @param {*} input
+         * @function
+         */
+        keyGen: function (input) {
+            input = input || randomBytes(secretbox.keyLength);
+            return encodeBase64(input);
+        },
+        /**
+         * @name encrypt
+         * @category crypto
+         * @memberof crypto.secretBox
+         * @param {object} json
+         * @param {string} key
+         * @throws {Error}
+         * @returns {string}
+         * @function
+         */
+        encrypt: function (_a) {
+            var _b = _a === void 0 ? {} : _a, json = _b.json, key = _b.key;
+            return __awaiter(this, void 0, void 0, function () {
+                var keyUint8Array, nonce, messageUint8, box, fullMessage, base64FullMessage;
+                return __generator(this, function (_c) {
+                    if (!key) {
+                        throw new Error('[CryptoPrimitive] - missing key');
+                    }
+                    try {
+                        keyUint8Array = decodeBase64(key);
+                    }
+                    catch (err) {
+                        throw new Error('[CryptoPrimitive] - key wrong type');
+                    }
+                    nonce = crypto.nonce();
+                    messageUint8 = decodeUTF8(JSON.stringify(json));
+                    box = secretbox(messageUint8, nonce, keyUint8Array);
+                    fullMessage = new Uint8Array(nonce.length + box.length);
+                    fullMessage.set(nonce);
+                    fullMessage.set(box, nonce.length);
+                    base64FullMessage = encodeBase64(fullMessage);
+                    return [2 /*return*/, base64FullMessage];
+                });
+            });
+        },
+        /*
+        encrypt__TEST_DO_NOT_USE_IN_PRODUCTION: async function ({ json, key, nonce }) {
+          if (!key) key = encodeBase64(randomBytes(secretbox.keyLength))
+          const keyUint8Array = decodeBase64(key)
+    
+          const messageUint8 = decodeUTF8(JSON.stringify(json))
+          const box = secretbox(messageUint8, nonce, keyUint8Array)
+    
+          const fullMessage = new Uint8Array(nonce.length + box.length)
+          fullMessage.set(nonce)
+          fullMessage.set(box, nonce.length)
+    
+          const base64FullMessage = encodeBase64(fullMessage)
+          return base64FullMessage
+        },
+        */
+        /**
+         * @name decrypt
+         * @category crypto
+         * @memberof crypto.secretBox
+         * @param {string} msg
+         * @param {string} key
+         * @throws {error} - Could not decrypt message
+         * @returns {object}
+         * @function
+         */
+        decrypt: function (_a) {
+            var _b = _a === void 0 ? {} : _a, msg = _b.msg, key = _b.key;
+            return __awaiter(this, void 0, void 0, function () {
+                var keyUint8Array, messageWithNonceAsUint8Array, nonce, message, decrypted, base64DecryptedMessage;
+                return __generator(this, function (_c) {
+                    keyUint8Array = decodeBase64(key);
+                    messageWithNonceAsUint8Array = decodeBase64(msg);
+                    nonce = messageWithNonceAsUint8Array.slice(0, secretbox.nonceLength);
+                    message = messageWithNonceAsUint8Array.slice(secretbox.nonceLength, msg.length);
+                    decrypted = secretbox.open(message, nonce, keyUint8Array);
+                    if (!decrypted) {
+                        throw new Error('Could not decrypt message');
+                    }
+                    base64DecryptedMessage = encodeUTF8(decrypted);
+                    // this is potentially dangerous, because we are
+                    // deflating JSON that might be executable
+                    // todo: we need to handle exceptions here
+                    return [2 /*return*/, JSON.parse(base64DecryptedMessage)];
+                });
+            });
+        }
+    },
+    // todo: fix, test and validate
+    /**
+     * @name box
+     * @category crypto
+     * @namespace
+     * @memberof crypto
+     * @description Make a public key / private key box
+     * @example
+     * ```
+     *  const obj = { hello: 'world' };
+     *  const pairA = crypto.nacl.box.generateKeyPair();
+     *  const pairB = gcrypto.nacl.box.enerateKeyPair();
+     *  const sharedA = box.before(pairB.publicKey, pairA.secretKey);
+     *  const sharedB = box.before(pairA.publicKey, pairB.secretKey);
+     *  const encrypted = crypto.nacl.box.encrypt(sharedA, obj);
+     *  const decrypted = crypto.nacl.box.decrypt(sharedB, encrypted);
+     *  console.log(obj, encrypted, decrypted);
+     * ```
+     *
+     */
+    box: {
+        /**
+         * @name generateKeyPair
+         * @category crypto
+         * @memberof crypto.box
+         * @returns {object}
+         * @function
+         */
+        generateKeyPair: function () {
+            return box.keyPair();
+        },
+        /**
+         * @name box.encrypt
+         * @category crypto
+         * @memberof crypto.box
+         * @param {string} secretOrSharedKey
+         * @param {object} json
+         * @param {string} key
+         * @function
+         */
+        encrypt: function (_a) {
+            var secretOrSharedKey = _a.secretOrSharedKey, json = _a.json, key = _a.key;
+            var nonce = this.crypto.nacl.nonce();
+            var messageUint8 = decodeUTF8(JSON.stringify(json));
+            var encrypted = key
+                ? box(messageUint8, nonce, key, secretOrSharedKey)
+                : box.after(messageUint8, nonce, secretOrSharedKey);
+            var fullMessage = new Uint8Array(nonce.length + encrypted.length);
+            fullMessage.set(nonce);
+            fullMessage.set(encrypted, nonce.length);
+            var base64FullMessage = encodeBase64(fullMessage);
+            return base64FullMessage;
+        },
+        /**
+         * @name decrypt
+         * @category crypto
+         * @memberof crypto.box
+         * @param {string} secretOrSharedKey
+         * @param {string} messageWithNonce
+         * @param {string} key
+         * @throws {error}
+         * @returns {string}
+         * @function
+         */
+        decrypt: function (_a) {
+            var secretOrSharedKey = _a.secretOrSharedKey, messageWithNonce = _a.messageWithNonce, key = _a.key;
+            var messageWithNonceAsUint8Array = decodeBase64(messageWithNonce);
+            var nonce = messageWithNonceAsUint8Array.slice(0, box.nonceLength);
+            var message = messageWithNonceAsUint8Array.slice(box.nonceLength, messageWithNonce.length);
+            var decrypted = key
+                ? box.open(message, nonce, key, secretOrSharedKey)
+                : box.open.after(message, nonce, secretOrSharedKey);
+            if (!decrypted) {
+                throw new Error('Could not decrypt message');
+            }
+            var base64DecryptedMessage = encodeUTF8(decrypted);
+            return JSON.parse(base64DecryptedMessage);
+        }
+    }
+};
+
+export { crypto, keyLength };
+//# sourceMappingURL=cryptoPrimitives.esm.js.map
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<footer class="footer">
+    <div class="content has-text-centered">
+        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a></p>
+        <p class="sidebar-created-by">
+            <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
+            <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+        </p>
+    </div>
+</footer>
+
+
+<script src="scripts/app.min.js"></script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -27,7 +27,7 @@
                 <div class="navbar-brand">
                     
                      
-                        <h1 class="navbar-item">curriedForage Documentation</h1>
+                        <h1 class="navbar-item">tauri-forage Documentation</h1>
                     
                     <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
                         <span aria-hidden="true"></span>
@@ -44,7 +44,7 @@
             <div class="column is-3" id="sidebarNav">
                 <div class="sidebar">
                     <nav>
-                        <h2><a href="index.html">Home</a></h2><div class="category"><h3>Namespaces</h3><ul><li><a href="crypto.html">crypto</a></li></ul></div><div class="category"><h2>crypto</h2><h3>Namespaces</h3><ul><li><a href="box.html">box</a></li><li><a href="secretBox.html">secretBox</a></li></ul><h3>Global</h3><ul><li><a href="global.html#hash">hash</a></li><li><a href="global.html#nonce">nonce</a></li></ul></div><div class="category"><h2>curriedForage</h2><h3>Namespaces</h3><ul><li><a href="curriedForage.html">curriedForage</a></li></ul></div><div class="category"><h2>utils</h2><h3>Global</h3><ul><li><a href="global.html#jsonPurify">jsonPurify</a></li><li><a href="global.html#logger">logger</a></li><li><a href="global.html#maybeCurry">maybeCurry</a></li><li><a href="global.html#returner">returner</a></li></ul></div>
+                        <h2><a href="index.html">Home</a></h2><div class="category"></div><div class="category"><h2>crypto</h2><h3>Namespaces</h3><ul><li><a href="crypto.html">crypto</a></li><li><a href="crypto.box.html">box</a></li><li><a href="crypto.secretBox.html">secretBox</a></li></ul></div><div class="category"><h2>forage</h2><h3>Namespaces</h3><ul><li><a href="cryptoForage.html">cryptoForage</a></li><li><a href="forage.html">forage</a></li></ul></div><div class="category"><h2>handler</h2><h3>Namespaces</h3><ul><li><a href="handler.html">handler</a></li></ul></div>
                     </nav>
                 </div>
             </div>
@@ -64,7 +64,8 @@
 
 <header>
     
-        <h2>box</h2>
+        <h2>
+            <span class="ancestors"><a href="crypto.html">crypto</a>.</span>box</h2>
         
     
 </header>
@@ -112,9 +113,9 @@
 
     
         <p class="tag-source">
-            <a href="cryptoPrimitives.js.html" class="button">View Source</a>
+            <a href="cryptoPrimitives.esm.js.html" class="button">View Source</a>
             <span>
-                <a href="cryptoPrimitives.js.html">cryptoPrimitives.js</a>, <a href="cryptoPrimitives.js.html#line145">line 145</a>
+                <a href="cryptoPrimitives.esm.js.html">cryptoPrimitives.esm.js</a>, <a href="cryptoPrimitives.esm.js.html#line145">line 145</a>
             </span>
         </p>
     
@@ -125,16 +126,7 @@
             <h3>Example</h3>
             
     
-        <pre class="prettyprint"><code>```
- const obj = { hello: 'world' };
- const pairA = crypto.nacl.box.generateKeyPair();
- const pairB = gcrypto.nacl.box.enerateKeyPair();
- const sharedA = box.before(pairB.publicKey, pairA.secretKey);
- const sharedB = box.before(pairA.publicKey, pairB.secretKey);
- const encrypted = crypto.nacl.box.encrypt(sharedA, obj);
- const decrypted = crypto.nacl.box.decrypt(sharedB, encrypted);
- console.log(obj, encrypted, decrypted);
-```</code></pre>
+        <pre class="prettyprint"><code>``` const obj = { hello: 'world' }; const pairA = crypto.nacl.box.generateKeyPair(); const pairB = gcrypto.nacl.box.enerateKeyPair(); const sharedA = box.before(pairB.publicKey, pairA.secretKey); const sharedB = box.before(pairA.publicKey, pairB.secretKey); const encrypted = crypto.nacl.box.encrypt(sharedA, obj); const decrypted = crypto.nacl.box.decrypt(sharedB, encrypted); console.log(obj, encrypted, decrypted);```</code></pre>
     
 
         
@@ -153,86 +145,6 @@
 
     
 
-    
-        <div class='vertical-section'>
-            <h3 class="title"><span>Members</span></h3>
-            <div class="members">
-            
-                <div class="member">
-
-<h4 class="name" id=".generateKeyPair">
-    <a class="href-link" href="#.generateKeyPair">#</a>
-    
-        
-            <span class='tag'>static</span>
-        
-    
-    <span class="code-name">
-        generateKeyPair
-    </span>
-    
-</h4>
-
-
-
-
-<div class="description">
-    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="cryptoPrimitives.js.html" class="button">View Source</a>
-            <span>
-                <a href="cryptoPrimitives.js.html">cryptoPrimitives.js</a>, <a href="cryptoPrimitives.js.html#line164">line 164</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-</div>
-            
-            </div>
-        </div>
     
 
     
@@ -411,9 +323,9 @@
 
     
         <p class="tag-source">
-            <a href="cryptoPrimitives.js.html" class="button">View Source</a>
+            <a href="cryptoPrimitives.esm.js.html" class="button">View Source</a>
             <span>
-                <a href="cryptoPrimitives.js.html">cryptoPrimitives.js</a>, <a href="cryptoPrimitives.js.html#line200">line 200</a>
+                <a href="cryptoPrimitives.esm.js.html">cryptoPrimitives.esm.js</a>, <a href="cryptoPrimitives.esm.js.html#line197">line 197</a>
             </span>
         </p>
     
@@ -490,8 +402,8 @@
 
 
     
-    <h4 class="name" id=".encrypt">
-        <a class="href-link" href="#.encrypt">#</a>
+    <h4 class="name" id=".generateKeyPair">
+        <a class="href-link" href="#.generateKeyPair">#</a>
         
             
                 <span class='tag'>static</span>
@@ -499,7 +411,7 @@
         
         <span class="code-name">
             
-                encrypt<span class="signature">(secretOrSharedKey, json, key)</span><span class="type-signature"></span>
+                generateKeyPair<span class="signature">()</span><span class="type-signature"> &rarr; {object}</span>
             
         </span>
     </h4>
@@ -519,106 +431,6 @@
 
 
 
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        
-<tr class="deep-level-0">
-  
-      <td class="name"><code>secretOrSharedKey</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">string</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-
-    
-
-        
-<tr class="deep-level-0">
-  
-      <td class="name"><code>json</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">object</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-
-    
-
-        
-<tr class="deep-level-0">
-  
-      <td class="name"><code>key</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">string</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-
-    
-    </tbody>
-</table>
 
 
 
@@ -657,9 +469,9 @@
 
     
         <p class="tag-source">
-            <a href="cryptoPrimitives.js.html" class="button">View Source</a>
+            <a href="cryptoPrimitives.esm.js.html" class="button">View Source</a>
             <span>
-                <a href="cryptoPrimitives.js.html">cryptoPrimitives.js</a>, <a href="cryptoPrimitives.js.html#line173">line 173</a>
+                <a href="cryptoPrimitives.esm.js.html">cryptoPrimitives.esm.js</a>, <a href="cryptoPrimitives.esm.js.html#line165">line 165</a>
             </span>
         </p>
     
@@ -681,6 +493,29 @@
 
 
 
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">object</span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
 
 
 

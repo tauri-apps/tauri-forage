@@ -1,0 +1,342 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>JSDoc: handler.esm.js</title>
+
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="./build/entry.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link href="https://fonts.googleapis.com/css?family=Muli:100,400,700|Oswald:300|Inconsolata,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+</head>
+
+<body>
+    <div id="stickyNavbarOverlay"></div>
+    <div class="top-navbar">
+        <div class="container">
+            <nav class="navbar" role="navigation" aria-label="main navigation">
+                <div class="navbar-brand">
+                    
+                     
+                        <h1 class="navbar-item">tauri-forage Documentation</h1>
+                    
+                    <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </a>
+                </div>
+                
+            </nav>
+        </div>
+    </div>
+    <div class="container">
+        <div class="columns">
+            <div class="column is-3" id="sidebarNav">
+                <div class="sidebar">
+                    <nav>
+                        <h2><a href="index.html">Home</a></h2><div class="category"></div><div class="category"><h2>crypto</h2><h3>Namespaces</h3><ul><li><a href="crypto.html">crypto</a></li><li><a href="crypto.box.html">box</a></li><li><a href="crypto.secretBox.html">secretBox</a></li></ul></div><div class="category"><h2>forage</h2><h3>Namespaces</h3><ul><li><a href="cryptoForage.html">cryptoForage</a></li><li><a href="forage.html">forage</a></li></ul></div><div class="category"><h2>handler</h2><h3>Namespaces</h3><ul><li><a href="handler.html">handler</a></li></ul></div>
+                    </nav>
+                </div>
+            </div>
+            <div class="column is-9-desktop">
+                <div class="content" id="main-content-wrapper">
+                    <header class="page-title">
+                        <p>Source</p>
+                        <h1>handler.esm.js</h1>
+                    </header>
+                    
+                    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { _ as __awaiter, a as __generator } from './_tslib-ca2dd4fc.js';
+
+/* eslint no-fallthrough: 0 */
+/**
+ * @namespace handler
+ * @category handler
+ */
+var handler = {
+    /**
+     * @name returner
+     * @description Return the value - or don't.
+     * Of special note is case 4, which will tell you if the
+     * result of the operation is true, false, null or undefined.
+     * You can use numbers or strings
+     *
+     * ## TYPES
+     * - 1(quiet) - return void 0
+     * - 2(console) - log the returned value to the console
+     * - 3(break) - throw an error with the contents of the return
+     * - 4(truthy) - return a true or false value
+     * - 5(typeof) - return type of response
+     * - 6(trace) - get a console.trace() of the call stack
+     * - 7(passthrough) - the default does nothing to the return
+     *
+     * @category handler
+     * @memberof handler
+     * @param {*} val
+     * @param {MaybeReturnerType} type
+     * @throws {Error} the message it is passed (if type 3)
+     * @returns {*}
+     * @function
+     */
+    returner: function (val, type) {
+        return function (returnerType) {
+            if (!type) {
+                type = returnerType;
+            }
+            var t = typeof type;
+            if (t === 'number' || t === 'string') {
+                switch (type) {
+                    case 1:
+                    case 'quiet': // be totally quiet
+                        return void 0;
+                    case 2:
+                    case 'console': // helpful for debugging
+                        console.log(val);
+                        break;
+                    case 3:
+                    case 'break': // manual breakpoint
+                        if (val instanceof Error) {
+                            // if it already is an error no need to throw twice
+                            // but if the message is empty, fill it.
+                            val.message ? void 0 : val.message = 'No value';
+                            throw val;
+                        }
+                        else {
+                            throw new Error(val || 'No result');
+                        }
+                    case 4:
+                    case 'truthy': // 'truthy': undefined not null
+                        return val === null || val === void 0 ? false : val !== false;
+                    case 5:
+                    case 'typeof': // return 'typeof'
+                        if (val === null)
+                            return 'null';
+                        if (val === void 0)
+                            return 'undefined';
+                        if (val instanceof Error)
+                            return 'error';
+                        try {
+                            val.map(function (v) { return v; });
+                            return 'array';
+                        }
+                        catch (e) {
+                            return typeof val;
+                        }
+                    case 6:
+                    case 'trace':
+                        console.trace("TRACE: " + val);
+                        break;
+                    case 7:
+                    case 'passthrough': // short-circuit
+                    case 'default':
+                    default:
+                        return val;
+                }
+            }
+            else { // not a string or a number
+                return val;
+            }
+        };
+    },
+    /**
+     * @function logger
+     * @description Set logging type for returning errors in a number of ways.
+     * @examples
+     *  handler.returner('not ava')() // returns 'not ava'
+     *  handler.returner('not ava')('truthy') // returns true
+     *  handler.returner('not ava', 'truthy')() // returns true
+     *
+     * ## TYPES
+     * - 1(none) - just return
+     * - 2(string) - returned the string value of the error
+     * - 3(trace) - try to return a stack trace up to the error
+     * - 4(console) - write a console.error
+     * - 5(throw) - throw the error
+     * - 6(default) - return undefined
+     *
+     * @category handler
+     * @memberof handler
+     * @param {*} msg
+     * @param {MaybeLoggerType} type
+     * @throws {Error} - just the message it is passed
+     * @returns {*}
+     */
+    logger: function (msg, type) {
+        // todo: discuss making things silent in production
+        /*
+        // set with a variable
+        process.env.PRODUCTION === true ? type = 'none' : void 0
+    
+        // short circuit (best perf)
+        if(process.env.LOGGING === 'none') return
+    
+        // delegate from .env (still global, most flexible)
+        ? process.env.LOGGING ? type = process.env.LOGGING : void 0
+        */
+        return function (loggerType) {
+            if (!type) {
+                type = loggerType;
+            }
+            var t = typeof type;
+            if ((t === 'number' || t === 'string') &amp;&amp; msg) {
+                switch (type) {
+                    case 1:
+                    case 'none':
+                        return;
+                    case 2:
+                    case 'string':
+                        return msg;
+                    case 3:
+                    case 'trace':
+                        console.trace("TRACE: " + msg);
+                        return;
+                    case 4:
+                    case 'console':
+                        console.error(msg);
+                        return;
+                    case 5:
+                    case 'throw':
+                        if (msg instanceof Error) {
+                            // if it already is an error no need to throw twice,
+                            // but if the message is empty, fill it.
+                            msg.message ? void 0 : msg.message = 'No message';
+                            throw msg;
+                        }
+                        else {
+                            throw new Error(msg || 'No result');
+                        }
+                }
+            }
+            else {
+                return void 0;
+            }
+        };
+    },
+    /**
+     * @name maybeCurry
+     * @description If a function is passed, apply it to the value.
+     * Otherwise, just return the value.
+     * @category handler
+     * @memberof handler
+     * @param {function} fn
+     * @param {*} val
+     * @returns {*}
+     * @function
+     */
+    maybeCurry: function (fn) {
+        return function (val) {
+            /* also works - just seems dirty (and dangerous)
+            try {
+              return fn(val)
+            } catch (e) {
+              return val
+            }
+            */
+            if (typeof fn === 'function') {
+                return fn(val);
+            }
+            else {
+                return val;
+            }
+        };
+    },
+    /**
+     * @name jsonPurify
+     * @description accepts an array and tries to parse the object passed
+     * @category handler
+     * @memberof handler
+     * @param {object} model - the model to map against
+     * @param {number} maxLen - max length of model
+     * @function
+     */
+    jsonPurify: function (_a) {
+        var _b = _a === void 0 ? {} : _a, model = _b.model, maxLen = _b.maxLen;
+        var parsedObj;
+        var safeObj = {};
+        /**
+         * @param {string}
+         */
+        return function (str) {
+            return __awaiter(this, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                    try {
+                        if (maxLen &amp;&amp; str.length > maxLen) {
+                            return [2 /*return*/, null];
+                        }
+                        else {
+                            parsedObj = JSON.parse(str);
+                            if (typeof parsedObj !== 'object' || Array.isArray(parsedObj)) {
+                                safeObj = parsedObj;
+                            }
+                            else {
+                                // copy only expected properties to the safeObj
+                                model.forEach(function (prop) {
+                                    if (parsedObj.hasOwnProperty(prop)) {
+                                        // eslint-disable-next-line security/detect-object-injection
+                                        safeObj[prop] = parsedObj[prop];
+                                    }
+                                });
+                            }
+                            return [2 /*return*/, safeObj];
+                        }
+                    }
+                    catch (e) {
+                        return [2 /*return*/, e];
+                    }
+                    return [2 /*return*/];
+                });
+            });
+        };
+    }
+};
+var handler$1 = { handler: handler };
+
+export default handler$1;
+export { handler };
+//# sourceMappingURL=handler.esm.js.map
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<footer class="footer">
+    <div class="content has-text-centered">
+        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a></p>
+        <p class="sidebar-created-by">
+            <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
+            <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+        </p>
+    </div>
+</footer>
+
+
+<script src="scripts/app.min.js"></script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,10 +1,10 @@
 import { MaybeFunction, Empty, Purifiable } from './types'
 
-export type ReturnerType = string | number | object;
+export type ReturnerType = string | number | object
 
-export type MaybeReturnerType = ReturnerType | Empty 
+export type MaybeReturnerType = ReturnerType | Empty
 
-export type LoggerType = 'none' | 'string' | 'trace' | 'console' | 'throw' 
+export type LoggerType = string | number
 
 export type MaybeLoggerType = LoggerType | Empty
 
@@ -102,6 +102,14 @@ export const handler = {
    *  handler.returner('not ava')('truthy') // returns true
    *  handler.returner('not ava', 'truthy')() // returns true
    *
+   * ## TYPES
+   * - 1(none) - just return
+   * - 2(string) - returned the string value of the error
+   * - 3(trace) - try to return a stack trace up to the error
+   * - 4(console) - write a console.error
+   * - 5(throw) - throw the error
+   * - 6(default) - return undefined
+   *
    * @category handler
    * @memberof handler
    * @param {*} msg
@@ -125,18 +133,24 @@ export const handler = {
       if (!type) {
         type = loggerType
       }
-      if (typeof type === 'string' && msg) {
+      const t = typeof type
+      if ((t === 'number' || t === 'string') && msg) {
         switch (type) {
+          case 1:
           case 'none':
             return
+          case 2:
           case 'string':
             return msg
+          case 3:
           case 'trace':
             console.trace(`TRACE: ${msg}`)
             return
+          case 4:
           case 'console':
             console.error(msg)
             return
+          case 5:
           case 'throw':
             if (msg instanceof Error) {
               // if it already is an error no need to throw twice,
@@ -146,6 +160,7 @@ export const handler = {
             } else {
               throw new Error(msg || 'No result')
             }
+          case 6:
           default:
             break
         }

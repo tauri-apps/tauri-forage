@@ -27,7 +27,7 @@
                 <div class="navbar-brand">
                     
                      
-                        <h1 class="navbar-item">curriedForage Documentation</h1>
+                        <h1 class="navbar-item">tauri-forage Documentation</h1>
                     
                     <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
                         <span aria-hidden="true"></span>
@@ -90,14 +90,6 @@ always catch an error.</p>
 Even if undefined is saved, null will be returned by getItem().
 This is due to a limitation in localStorage, and for compatibility
 reasons localForage cannot store the value undefined.</p>
-<p>The process is:</p>
-<ol>
-<li>forage.config({object})</li>
-<li>forage.ready()</li>
-<li>forage.set('user', { age: 12 })</li>
-<li>forage.get('user')</li>
-<li>forage.clear()</li>
-</ol>
 <p>Usage Options:</p>
 <ol>
 <li>Exactly the same interface as localForage</li>
@@ -143,9 +135,9 @@ reasons localForage cannot store the value undefined.</p>
 
     
         <p class="tag-source">
-            <a href="curriedForage.js.html" class="button">View Source</a>
+            <a href="curriedForage.esm.js.html" class="button">View Source</a>
             <span>
-                <a href="curriedForage.js.html">curriedForage.js</a>, <a href="curriedForage.js.html#line14">line 14</a>
+                <a href="curriedForage.esm.js.html">curriedForage.esm.js</a>, <a href="curriedForage.esm.js.html#line7">line 7</a>
             </span>
         </p>
     
@@ -296,9 +288,9 @@ reasons localForage cannot store the value undefined.</p>
 
     
         <p class="tag-source">
-            <a href="curriedForage.js.html" class="button">View Source</a>
+            <a href="curriedForage.esm.js.html" class="button">View Source</a>
             <span>
-                <a href="curriedForage.js.html">curriedForage.js</a>, <a href="curriedForage.js.html#line379">line 379</a>
+                <a href="curriedForage.esm.js.html">curriedForage.esm.js</a>, <a href="curriedForage.esm.js.html#line564">line 564</a>
             </span>
         </p>
     
@@ -450,9 +442,9 @@ If you just want to know if it worked, do this:</p>
 
     
         <p class="tag-source">
-            <a href="curriedForage.js.html" class="button">View Source</a>
+            <a href="curriedForage.esm.js.html" class="button">View Source</a>
             <span>
-                <a href="curriedForage.js.html">curriedForage.js</a>, <a href="curriedForage.js.html#line409">line 409</a>
+                <a href="curriedForage.esm.js.html">curriedForage.esm.js</a>, <a href="curriedForage.esm.js.html#line598">line 598</a>
             </span>
         </p>
     
@@ -575,9 +567,9 @@ don't use this. prefer to use config</p>
 
     
         <p class="tag-source">
-            <a href="curriedForage.js.html" class="button">View Source</a>
+            <a href="curriedForage.esm.js.html" class="button">View Source</a>
             <span>
-                <a href="curriedForage.js.html">curriedForage.js</a>, <a href="curriedForage.js.html#line387">line 387</a>
+                <a href="curriedForage.esm.js.html">curriedForage.esm.js</a>, <a href="curriedForage.esm.js.html#line572">line 572</a>
             </span>
         </p>
     
@@ -641,7 +633,7 @@ don't use this. prefer to use config</p>
         
         <span class="code-name">
             
-                getItem<span class="signature">(key, logger, returner)</span><span class="type-signature"> &rarr; {Promise.&lt;(object|string|*)>}</span>
+                getItem<span class="signature">(key, logger, returner, before, store)</span><span class="type-signature"> &rarr; {Promise.&lt;(object|string|*)>}</span>
             
         </span>
     </h4>
@@ -760,6 +752,56 @@ don't use this. prefer to use config</p>
 
 
     
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>before</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">boolean</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>store</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">string</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+
+    
     </tbody>
 </table>
 
@@ -800,9 +842,9 @@ don't use this. prefer to use config</p>
 
     
         <p class="tag-source">
-            <a href="curriedForage.js.html" class="button">View Source</a>
+            <a href="curriedForage.esm.js.html" class="button">View Source</a>
             <span>
-                <a href="curriedForage.js.html">curriedForage.js</a>, <a href="curriedForage.js.html#line50">line 50</a>
+                <a href="curriedForage.esm.js.html">curriedForage.esm.js</a>, <a href="curriedForage.esm.js.html#line36">line 36</a>
             </span>
         </p>
     
@@ -1077,9 +1119,9 @@ don't use this. prefer to use config</p>
 
     
         <p class="tag-source">
-            <a href="curriedForage.js.html" class="button">View Source</a>
+            <a href="curriedForage.esm.js.html" class="button">View Source</a>
             <span>
-                <a href="curriedForage.js.html">curriedForage.js</a>, <a href="curriedForage.js.html#line74">line 74</a>
+                <a href="curriedForage.esm.js.html">curriedForage.esm.js</a>, <a href="curriedForage.esm.js.html#line82">line 82</a>
             </span>
         </p>
     
@@ -1414,9 +1456,312 @@ merge strategy. This is a &quot;prebuilt&quot; Curry.</p>
 
     
         <p class="tag-source">
-            <a href="curriedForage.js.html" class="button">View Source</a>
+            <a href="curriedForage.esm.js.html" class="button">View Source</a>
             <span>
-                <a href="curriedForage.js.html">curriedForage.js</a>, <a href="curriedForage.js.html#line154">line 154</a>
+                <a href="curriedForage.esm.js.html">curriedForage.esm.js</a>, <a href="curriedForage.esm.js.html#line215">line 215</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">Promise.&lt;(object|string|*)></span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id=".setItem">
+        <a class="href-link" href="#.setItem">#</a>
+        
+            
+                <span class='tag'>static</span>
+            
+        
+        <span class="code-name">
+            
+                setItem<span class="signature">(key, value, restArgs)</span><span class="type-signature"> &rarr; {Promise.&lt;(object|string|*)>}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>set an row if it exists, completely overwrite it if
+it does not exist.</p>
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>key</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">string</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>value</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">string</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>restArgs</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">function</span>
+|
+
+<span class="param-type">string</span>
+|
+
+<span class="param-type">number</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+  
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>curry</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">function</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>logger</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">string</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>returner</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">number</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+  
+
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="curriedForage.esm.js.html" class="button">View Source</a>
+            <span>
+                <a href="curriedForage.esm.js.html">curriedForage.esm.js</a>, <a href="curriedForage.esm.js.html#line126">line 126</a>
             </span>
         </p>
     
@@ -1689,9 +2034,9 @@ merge strategy. This is a &quot;prebuilt&quot; Curry.</p>
 
     
         <p class="tag-source">
-            <a href="curriedForage.js.html" class="button">View Source</a>
+            <a href="curriedForage.esm.js.html" class="button">View Source</a>
             <span>
-                <a href="curriedForage.js.html">curriedForage.js</a>, <a href="curriedForage.js.html#line129">line 129</a>
+                <a href="curriedForage.esm.js.html">curriedForage.esm.js</a>, <a href="curriedForage.esm.js.html#line173">line 173</a>
             </span>
         </p>
     
@@ -1727,309 +2072,6 @@ merge strategy. This is a &quot;prebuilt&quot; Curry.</p>
         <label>Type: </label>
         
 <span class="param-type">Promise.&lt;string></span>
-
-
-    </div>
-    
-</div>
-
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-                <div class="member">
-
-
-    
-    <h4 class="name" id=".setItem">
-        <a class="href-link" href="#.setItem">#</a>
-        
-            
-                <span class='tag'>static</span>
-            
-        
-        <span class="code-name">
-            
-                setItem<span class="signature">(key, value, restArgs)</span><span class="type-signature"> &rarr; {Promise.&lt;(object|string|*)>}</span>
-            
-        </span>
-    </h4>
-    
-
-    
-    
-    <div class="description">
-        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>set an row if it exists, completely overwrite it if
-it does not exist.</p>
-    </div>
-    
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        
-<tr class="deep-level-0">
-  
-      <td class="name"><code>key</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">string</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-
-    
-
-        
-<tr class="deep-level-0">
-  
-      <td class="name"><code>value</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">string</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-
-    
-
-        
-<tr class="deep-level-0">
-  
-      <td class="name"><code>restArgs</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">function</span>
-|
-
-<span class="param-type">string</span>
-|
-
-<span class="param-type">number</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-  
-  
-    
-<tr class="deep-level-1">
-  
-      <td class="name"><code>curry</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">function</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-  
-    
-<tr class="deep-level-1">
-  
-      <td class="name"><code>logger</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">string</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-  
-    
-<tr class="deep-level-1">
-  
-      <td class="name"><code>returner</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">number</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-  
-
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="curriedForage.js.html" class="button">View Source</a>
-            <span>
-                <a href="curriedForage.js.html">curriedForage.js</a>, <a href="curriedForage.js.html#line101">line 101</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
-        
-<span class="param-type">Promise.&lt;(object|string|*)></span>
 
 
     </div>
