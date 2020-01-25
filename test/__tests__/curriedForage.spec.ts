@@ -234,7 +234,7 @@ describe('[Forage] getKeyValue', () => {
     expect(user).toStrictEqual('ALICE')
   })
   it('will curry before', async () => {
-    await forage.setItem({ key: 'user', value: { name: 'Alice' }  as any})()
+    await forage.setItem({ key: 'user', value: { name: 'Alice' } } as any)()
     const curry = (v: any) => v.toLowerCase()
     const user = await forage.getKeyValue({ key: 'user', value: 'NAME', before: true })(curry)
     expect(user).toStrictEqual('Alice')

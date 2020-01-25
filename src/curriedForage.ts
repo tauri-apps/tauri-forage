@@ -19,7 +19,7 @@ export interface Item {
   store?: string
 }
 
-export interface BeforeItem extends Item{ 
+export interface BeforeItem extends Item{
   before?: boolean
 }
 
@@ -56,13 +56,6 @@ export interface MergeItem extends KeyValueItem {
  *  This is due to a limitation in localStorage, and for compatibility
  *  reasons localForage cannot store the value undefined.
  *
- *  The process is:
- *  1. forage.config({object})
- *  2. forage.ready()
- *  3. forage.set('user', { age: 12 })
- *  4. forage.get('user')
- *  5. forage.clear()
- *
  * Usage Options:
  * 1. Exactly the same interface as localForage
  * 2. With a currying function applied to the result
@@ -79,6 +72,8 @@ const forage = {
    * @param {string} key
    * @param {string} logger
    * @param {number} returner
+   * @param {boolean} before
+   * @param {string} store
    * @returns {Promise<object|string|*>}
    * @function getItem
    * @memberof forage
@@ -92,7 +87,7 @@ const forage = {
           return !before ? handler.maybeCurry(curry || null)(v) : v
         }).catch((err: any) => {
           /* istanbul ignore next */
-          return handler.logger(err, logger)
+          return handler.logger(err)(logger)
         })
       )(returner)
     }
@@ -119,7 +114,7 @@ const forage = {
           return !before ? handler.maybeCurry(curry || null)(v[value]) : v[value]
         }).catch((err: any) => {
           /* istanbul ignore next */
-          return handler.logger(err, logger)
+          return handler.logger(err)(logger)
         })
       )(returner)
     }
@@ -147,7 +142,7 @@ const forage = {
           return !before ? handler.maybeCurry(curry || null)(v) : v
         }).catch((err: any) => {
           /* istanbul ignore next */
-          return handler.logger(err, logger)
+          return handler.logger(err)(logger)
         })
       )(returner)
     }
@@ -172,7 +167,7 @@ const forage = {
           return !before ? handler.maybeCurry(curry || null)(v) : v
         }).catch((err: any) => {
           /* istanbul ignore next */
-          return handler.logger(err, logger)
+          return handler.logger(err)(logger)
         })
       )(returner)
     }
@@ -212,7 +207,7 @@ const forage = {
                 return val
               } catch (err) {
                 /* istanbul ignore next */
-                return handler.logger(err, logger)
+                return handler.logger(err)(logger)
               }
             case 'right':
               try {
@@ -220,7 +215,7 @@ const forage = {
                 return val
               } catch (err) {
                 /* istanbul ignore next */
-                return handler.logger(err, logger)
+                return handler.logger(err)(logger)
               }
             case 'deepRight':
               try {
@@ -228,7 +223,7 @@ const forage = {
                 return val
               } catch (err) {
                 /* istanbul ignore next */
-                return handler.logger(err, logger)
+                return handler.logger(err)(logger)
               }
             case 'with':
               try {
@@ -236,21 +231,21 @@ const forage = {
                 return val
               } catch (err) {
                 /* istanbul ignore next */
-                return handler.logger(err, logger)
+                return handler.logger(err)(logger)
               }
             case 'withKey':
               try {
                 return storage.setItem(key, mergeWithKey(concatValues, v, value))
               } catch (err) {
                 /* istanbul ignore next */
-                return handler.logger(err, logger)
+                return handler.logger(err)(logger)
               }
             case 'deepWith': // watch out for booleans!
               try {
                 return storage.setItem(key, mergeDeepWith(concat, v, value))
               } catch (err) {
                 /* istanbul ignore next */
-                return handler.logger(err, logger)
+                return handler.logger(err)(logger)
               }
             case 'deepWithKey': // this is probably what you want
             default:
@@ -259,12 +254,12 @@ const forage = {
                 return val
               } catch (err) {
                 /* istanbul ignore next */
-                return handler.logger(err, logger)
+                return handler.logger(err)(logger)
               }
           }
         }).catch((err: any) => {
           /* istanbul ignore next */
-          return handler.logger(err, logger)
+          return handler.logger(err)(logger)
         }))(returner)
     }
   },
@@ -278,7 +273,7 @@ const forage = {
           return true // !before ? handler.maybeCurry(curry || null)(true) : true
         }).catch((err: any) => {
           /* istanbul ignore next */
-          return handler.logger(err, logger)
+          return handler.logger(err)(logger)
         })
       )(returner)
     }
@@ -303,14 +298,14 @@ const forage = {
       return handler.logger(err, args[0].logger)
     })
   },
-  clear ({ logger = 'none', store }: { logger?: MaybeLoggerType, store?: string } = {}) {
+  clear ({ logger = 'none', store }: { logger?: LoggerType, store?: string } = {}) {
     return async function (curry?: MaybeFunction) {
       const storage = await _defineStore({ store: store })
       return storage.clear().then(() => {
         return handler.maybeCurry(curry || null)(true)
       }).catch((err: any) => {
         /* istanbul ignore next */
-        return handler.logger(err, logger)
+        return handler.logger(err)(logger)
       })
     }
   },
@@ -322,7 +317,7 @@ const forage = {
           return handler.maybeCurry(curry || null)(v)
         }).catch((err: any) => {
           /* istanbul ignore next */
-          return handler.logger(err, logger)
+          return handler.logger(err)(logger)
         })
       )(returner)
     }
@@ -349,7 +344,7 @@ const forage = {
           return handler.maybeCurry(curry || null)(v)
         }).catch((err: any) => {
           /* istanbul ignore next */
-          return handler.logger(err, logger)
+          return handler.logger(err)(logger)
         })
       )(returner)
     }
@@ -363,7 +358,7 @@ const forage = {
           return handler.maybeCurry(curry || null)(k.includes(key))
         }).catch((err: any) => {
           /* istanbul ignore next */
-          return handler.logger(err, logger)
+          return handler.logger(err)(logger)
         })
       )(returner)
     }
@@ -377,7 +372,7 @@ const forage = {
     return localForage.keys().then(k => {
       return handler.maybeCurry(curry)(k.includes(key))
     }).catch(err => {
-      return handler.logger(err, logger)
+      return handler.logger(err)(logger)
     })
   },
   */
@@ -388,7 +383,7 @@ const forage = {
           return handler.maybeCurry(curry)(!!val[value])
         }).catch((err: any) => {
           /* istanbul ignore next */
-          return handler.logger(err, logger)
+          return handler.logger(err)(logger)
         })
       )(returner)
     }
