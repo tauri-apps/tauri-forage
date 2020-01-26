@@ -430,7 +430,7 @@ const forage = {
   createInstance ({ name, logger }: { name?: string, logger?: any} = {}) {
     // this should also register itself in a list of stores
     return localForage.createInstance({
-      name: name || 'curriedForage'
+      name: name || 'tauriForage'
     }
     // , (success: any, err: any) => {
     //   /* istanbul ignore next */
@@ -477,7 +477,7 @@ const forage = {
  * In fact, we care so much about speed, we will probably
  * deprecate this. :D
  *
- * @category curriedForage
+ * @category tauriForage
  * @param {Array} arr
  * @returns {Array}
  * @private
@@ -542,5 +542,5 @@ export {
   hasKeyValue,
   ready,
   defineStore,
-  internals // todo: move curriedForage entirely to external version of these
+  internals // todo: move tauriForage entirely to external version of these
 } // to use anywhere outside of vue contexts

@@ -1,5 +1,5 @@
 import { crypto } from './cryptoPrimitives'
-import { forage } from './curriedForage'
+import { forage } from './tauriForage'
 import { handler, LoggerType, ReturnerType } from './handler'
 import { Purifiable } from './types'
 

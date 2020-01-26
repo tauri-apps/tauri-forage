@@ -27,7 +27,7 @@ forage.setItem({
 ```
 
 ## How does it work?
-Here is the `getItem` function. There is a lot to discuss, and once you've understood the principle all of the other functions will make sense to you. If you want to see more details, check out the tests in `test/__tests__/curriedForage.spec.ts`
+Here is the `getItem` function. There is a lot to discuss, and once you've understood the principle all of the other functions will make sense to you. If you want to see more details, check out the tests in `test/__tests__/tauriForage.spec.ts`
 
 ```ts
 getItem ({ key, logger, returner, before, store }: BeforeItem = {}) {

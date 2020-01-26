@@ -9,7 +9,7 @@ export default {
   input: {
     cryptoForage: 'src/cryptoForage.ts',
     cryptoPrimitives: 'src/cryptoPrimitives.ts',
-    curriedForage: 'src/curriedForage.ts',
+    tauriForage: 'src/tauriForage.ts',
     handler: 'src/handler.ts',
     index: 'src/index.ts'
   },
