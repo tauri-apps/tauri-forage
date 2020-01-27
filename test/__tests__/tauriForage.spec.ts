@@ -7,7 +7,7 @@
  */
 
 import { forage, handler } from '../../src'
-import { internals } from '../../src/curriedForage'
+import { internals } from '../../src/tauriForage'
 import localForage from 'localforage'
 
 /*********************************************************************************

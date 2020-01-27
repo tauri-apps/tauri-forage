@@ -82,7 +82,7 @@ describe('[cryptoForage] - enBox', () => {
 })
 
 describe('[cryptoForage] - enBox', () => {
-  it('plays nice as curry with curriedForage', async () => {
+  it('plays nice as curry with tauriForage', async () => {
     const boxed = cryptoForage.enBox({
       key: NACL_COMMON.key,
       loggerType: 'throw'
@@ -101,7 +101,7 @@ describe('[cryptoForage] - enBox', () => {
 })
 
 describe('[cryptoForage] - deBox', () => {
-  it('plays nice currying curriedForage', async () => {
+  it('plays nice currying tauriForage', async () => {
     const boxed = cryptoForage.enBox({
       key: NACL_COMMON.key,
       loggerType: 'throw'
@@ -129,7 +129,7 @@ describe('[cryptoForage] - deBox', () => {
 })
 
 describe('[cryptoForage] - deBox', () => {
-  it('plays nice currying curriedForage', async () => {
+  it('plays nice currying tauriForage', async () => {
     forage.clear({})
     const boxed = cryptoForage.enBox({
       key: NACL_COMMON.key,
@@ -193,7 +193,7 @@ describe('[cryptoForage] - enBox benchmark', () => {
 })
 
 describe('[cryptoForage] - deBox', () => {
-  it('plays nice currying curriedForage', async () => {
+  it('plays nice currying tauriForage', async () => {
     forage.clear({})
 
     const first = await forage.setItem({
@@ -232,7 +232,7 @@ describe('[cryptoForage] - deBox', () => {
   })
 })
 describe('[cryptoForage] - deBox', () => {
-  it('plays nice currying curriedForage', async () => {
+  it('plays nice currying tauriForage', async () => {
     forage.clear({})
 
     const first = await forage.setItem({
@@ -272,7 +272,7 @@ describe('[cryptoForage] - deBox', () => {
   })
 })
 describe('[cryptoForage] - deBox with model proof', () => {
-  it('plays nice currying curriedForage', async () => {
+  it('plays nice currying tauriForage', async () => {
     forage.clear({})
 
     const first = await forage.setItem({

@@ -62,7 +62,8 @@
     
 
 
-    <h3>@tauri-apps/tauri-forage 1.0.0-beta.1</h3>
+    <h3>@tauri-apps/tauri-forage 1.0.0-beta.2</h3>
+
 
 
 
@@ -98,7 +99,7 @@
 })()
 </code></pre>
 <h2>How does it work?</h2>
-<p>Here is the <code>getItem</code> function. There is a lot to discuss, and once you've understood the principle all of the other functions will make sense to you. If you want to see more details, check out the tests in <code>test/__tests__/curriedForage.spec.ts</code></p>
+<p>Here is the <code>getItem</code> function. There is a lot to discuss, and once you've understood the principle all of the other functions will make sense to you. If you want to see more details, check out the tests in <code>test/__tests__/tauriForage.spec.ts</code></p>
 <pre class="prettyprint source lang-ts"><code>getItem ({ key, logger, returner, before, store }: BeforeItem = {}) {
   return async function (curry?: MaybeFunction) {
     const storage = await _defineStore({ store: store })

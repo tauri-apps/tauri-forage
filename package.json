@@ -1,6 +1,6 @@
 {
   "name": "@tauri-apps/tauri-forage",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.2",
   "description": "enhanced localForage with curry and crypto - for any browser and device",
   "main": "dist/index.cjs.min.js",
   "module": "dist/index.esm.js",
